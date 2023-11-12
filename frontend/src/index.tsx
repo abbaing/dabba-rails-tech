@@ -1,8 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Layout from './layout'
 
 const App: React.FC = () => {
-  return <div>Hello, React with TypeScript!</div>
+  return <Layout>Ruby on Rails + React Tech Test!</Layout>
 }
 
 ReactDOM.render(<App />, document.getElementById('root'))
