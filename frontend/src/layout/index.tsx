@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import Navbar from 'components/layout/navbar'
 
 interface LayoutProps {
   children: ReactNode
@@ -7,9 +8,11 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className='container mt-5'>
-      <h1 className='display-4'>My Bootstrap template</h1>
-      <div>{children}</div>
+    <div>
+      <Navbar />
+      <div className='container mt-5'>
+        <div>{children}</div>
+      </div>
     </div>
   )
 }
