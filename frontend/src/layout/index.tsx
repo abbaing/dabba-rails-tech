@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Navbar from 'components/layout/navbar'
+import Navbar from 'layout/navbar'
 
 interface LayoutProps {
   children: ReactNode
