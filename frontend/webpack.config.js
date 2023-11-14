@@ -11,7 +11,9 @@ module.exports = {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
     alias: {
       components: path.join(__dirname, 'src/components'),
-      layout: path.join(__dirname, 'src/layout')
+      layout: path.join(__dirname, 'src/layout'),
+      modules: path.join(__dirname, 'src/modules'),
+      utils: path.join(__dirname, 'src/utils')
     }
   },
   module: {
