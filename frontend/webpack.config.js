@@ -38,6 +38,7 @@ module.exports = {
     static: {
       directory: path.join(__dirname, 'dist'),
     },
+    historyApiFallback: true,
     port: 8080,
   },
 }

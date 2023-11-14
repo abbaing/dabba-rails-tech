@@ -1,9 +1,7 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import Layout from './layout'
+import { createRoot } from 'react-dom/client'
+import Routes from './routes'
 
-const App: React.FC = () => {
-  return <Layout>Ruby on Rails + React Tech Test!</Layout>
-}
-
-ReactDOM.render(<App />, document.getElementById('root'))
+const container = document.getElementById('root') as Element
+const root = createRoot(container)
+root.render(<Routes />)
