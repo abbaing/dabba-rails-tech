@@ -1,6 +1,10 @@
+import { inject, observer } from 'mobx-react'
 import React from 'react'
+import cartStore from 'stores/cartStore'
 
 const Navbar = () => {
+  const cartEmpty = false // cartStore.items.length === 0
+
   return (
     <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
       <div className='container-fluid'>
@@ -28,7 +32,12 @@ const Navbar = () => {
             </li>
           </ul>
           <button type='button' className='btn btn-dark'>
-            My Cart
+            My Cart{' '}
+            {!cartEmpty && (
+              <span className='badge text-bg-secondary'>
+                {cartStore.items.length}
+              </span>
+            )}
           </button>
         </div>
       </div>
@@ -36,4 +45,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default inject('cartStore')(observer(Navbar))

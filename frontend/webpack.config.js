@@ -13,7 +13,8 @@ module.exports = {
       components: path.join(__dirname, 'src/components'),
       layout: path.join(__dirname, 'src/layout'),
       modules: path.join(__dirname, 'src/modules'),
-      utils: path.join(__dirname, 'src/utils')
+      utils: path.join(__dirname, 'src/utils'),
+      stores: path.join(__dirname, 'src/stores'),
     }
   },
   module: {
