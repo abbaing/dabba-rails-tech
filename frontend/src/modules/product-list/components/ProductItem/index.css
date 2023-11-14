@@ -1,0 +1,10 @@
+.old-price {
+    color: #858585;
+    text-decoration: line-through;
+    padding-left: .25rem;
+}
+
+.price {
+    color: #444444;
+    font-weight: bold;
+}
