@@ -3,7 +3,7 @@ import React from 'react'
 import cartStore from 'stores/cartStore'
 
 const Navbar = () => {
-  const cartEmpty = false // cartStore.items.length === 0
+  const cartEmpty = cartStore.items.length === 0
 
   return (
     <nav className='navbar navbar-expand-md navbar-dark bg-dark'>
@@ -31,14 +31,14 @@ const Navbar = () => {
               </a>
             </li>
           </ul>
-          <button type='button' className='btn btn-dark'>
+          <a href='my-cart' className='btn btn-dark'>
             My Cart{' '}
             {!cartEmpty && (
               <span className='badge text-bg-secondary'>
                 {cartStore.totalItems}
               </span>
             )}
-          </button>
+          </a>
         </div>
       </div>
     </nav>

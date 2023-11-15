@@ -1,3 +1,4 @@
+import CartRoutes from 'modules/cart/routes'
 import ProductListRoutes from 'modules/product-list/routes'
 import NotFoundPage from 'modules/shared/pages/NotFound'
 import RootPage from 'modules/shared/pages/Root'
@@ -12,7 +13,7 @@ const Routes = (): JSX.Element => {
       errorElement: <NotFoundPage />,
     },
   ]
-  const paths = [...rootPath, ...ProductListRoutes]
+  const paths = [...rootPath, ...ProductListRoutes, ...CartRoutes]
   return (
     <React.StrictMode>
       <RouterProvider router={createBrowserRouter(paths)} />
