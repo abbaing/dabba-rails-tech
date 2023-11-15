@@ -71,7 +71,7 @@ const CartItem = ({ item }: Props) => {
           </div>
         </div>
       </div>
-      <div className='col-md-auto px-3 my-3 text-center'>
+      <div className='col-md-2 px-3 my-3 text-center'>
         <div className={styles['column-label']}>Price</div>
         <span className='text-xl font-weight-medium'>
           {product.oldPrice && oldPriceComponent(product.oldPrice)}
