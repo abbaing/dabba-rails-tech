@@ -4,6 +4,7 @@ import ProductItem from 'modules/product-list/components/ProductItem'
 import React from 'react'
 import './index.css'
 import cartStore from 'stores/cartStore'
+import { toast } from 'react-toastify'
 
 const products: ProductModel[] = [
   {
@@ -34,6 +35,8 @@ const products: ProductModel[] = [
 const ProductListPage = (): JSX.Element => {
   const onAddToCart = (item: ProductModel) => {
     cartStore.addItem(item)
+
+    toast.info(`${item.name} added to your cart!`);
   }
 
   return (
