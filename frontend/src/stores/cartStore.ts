@@ -1,22 +1,36 @@
 import { action, computed, observable } from 'mobx'
-import ProductModel from 'models/productModel'
+import CartModel from 'models/cartModel'
 
 class CartStore {
-  @observable accessor items: ProductModel[] = []
+  @observable accessor items: CartModel[] = []
 
   @action
-  addItem(item: ProductModel): void {
+  addItem(item: CartModel): void {
     this.items.push(item)
   }
 
   @action
+  updateItemQuantity(itemId: number, quantity: number): void {
+    const itemToUpdate = this.items.find((item) => item.product.id === itemId)
+
+    if (itemToUpdate) {
+      itemToUpdate.quantity = quantity
+    }
+  }
+
+  @action
   removeItem(itemId: number): void {
-    this.items = this.items.filter((item) => item.id !== itemId)
+    this.items = this.items.filter((item) => item.product.id !== itemId)
+  }
+
+  @action
+  getItem(itemId: number): CartModel | undefined {
+    return this.items.find((item) => item.product.id === itemId)
   }
 
   @computed
   get totalItems(): number {
-    return this.items.length
+    return this.items.reduce((sum, current) => sum + current.quantity, 0)
   }
 }
 

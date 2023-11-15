@@ -1,16 +1,36 @@
 import ProductModel from 'models/productModel'
-import React from 'react'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
+import cartService from 'services/CartService'
 import { formatCurrency } from 'utils/currencyUtils'
 import './index.css'
 
 interface Props {
   item: ProductModel
-  onAddToCart: (item: ProductModel) => void
 }
 
-const ProductItem = ({ item, onAddToCart }: Props) => {
+const ProductItem = ({ item }: Props) => {
+  const [showSelector, setShowSelector] = useState(false)
+  const [count, setCount] = useState(0)
+
   const oldPriceComponent = (price?: number) => {
     return <span className='old-price'>{formatCurrency(price)}</span>
+  }
+
+  const handleIncrement = () => {
+    let newCount = count + 1
+    setCount(newCount)
+    cartService.updateCart(item, newCount)
+    
+    toast.info(`${item.name} added to your cart!`)
+  }
+
+  const handleDecrement = () => {
+    let newCount = count - 1
+    if (newCount > 0) {
+      setCount(newCount)
+      cartService.updateCart(item, newCount)
+    }
   }
 
   return (
@@ -30,13 +50,35 @@ const ProductItem = ({ item, onAddToCart }: Props) => {
           </div>
         </div>
         <div className='card-footer'>
-          <a
-            href='#'
-            className='btn btn-primary'
-            onClick={() => onAddToCart(item)}
-          >
-            Add To Cart
-          </a>
+          {!showSelector && (
+            <a
+              href='#'
+              className='btn btn-primary'
+              onClick={() => {
+                handleIncrement()
+                setShowSelector(true)
+              }}
+            >
+              Add To Cart
+            </a>
+          )}
+          {showSelector && (
+            <div>
+              <button
+                className='btn btn-outline-secondary'
+                onClick={handleDecrement}
+              >
+                -
+              </button>
+              <span className='cart-counter'>{count}</span>
+              <button
+                className='btn btn-outline-secondary'
+                onClick={handleIncrement}
+              >
+                +
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

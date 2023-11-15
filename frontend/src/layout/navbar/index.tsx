@@ -35,7 +35,7 @@ const Navbar = () => {
             My Cart{' '}
             {!cartEmpty && (
               <span className='badge text-bg-secondary'>
-                {cartStore.items.length}
+                {cartStore.totalItems}
               </span>
             )}
           </button>

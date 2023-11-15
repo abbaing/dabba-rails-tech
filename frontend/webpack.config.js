@@ -15,6 +15,8 @@ module.exports = {
       modules: path.join(__dirname, 'src/modules'),
       utils: path.join(__dirname, 'src/utils'),
       stores: path.join(__dirname, 'src/stores'),
+      services: path.join(__dirname, 'src/services'),
+      models: path.join(__dirname, 'src/models'),
     }
   },
   module: {

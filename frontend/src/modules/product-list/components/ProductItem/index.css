@@ -8,3 +8,8 @@
     color: #444444;
     font-weight: bold;
 }
+
+.cart-counter {
+    margin-left: .75rem;
+    margin-right: .75rem;
+}

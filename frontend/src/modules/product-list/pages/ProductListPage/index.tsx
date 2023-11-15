@@ -3,8 +3,6 @@ import ProductModel from 'models/productModel'
 import ProductItem from 'modules/product-list/components/ProductItem'
 import React from 'react'
 import './index.css'
-import cartStore from 'stores/cartStore'
-import { toast } from 'react-toastify'
 
 const products: ProductModel[] = [
   {
@@ -33,19 +31,13 @@ const products: ProductModel[] = [
 ]
 
 const ProductListPage = (): JSX.Element => {
-  const onAddToCart = (item: ProductModel) => {
-    cartStore.addItem(item)
-
-    toast.info(`${item.name} added to your cart!`);
-  }
-
   return (
     <Layout>
       <h3>Product Catalog</h3>
       <div className='container product-catalog-container'>
         <div className='row row-cols-md-3 g-4'>
           {products.map((item) => (
-            <ProductItem key={item.id} item={item} onAddToCart={onAddToCart} />
+            <ProductItem key={item.id} item={item} />
           ))}
         </div>
       </div>
