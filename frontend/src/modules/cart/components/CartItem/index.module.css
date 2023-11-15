@@ -1,0 +1,28 @@
+.container {
+  margin-bottom: 5rem;
+  position: relative;
+  margin-bottom: 1rem;
+  padding: 0 2rem 0 0rem;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 2px 0.5px rgba(64, 64, 64, 0.06);
+}
+
+.count-input {
+  margin-top: 0.2rem;
+}
+
+.column-label {
+  color: #555555;
+}
+
+.old-price {
+  color: #858585;
+  text-decoration: line-through;
+  padding-left: 0.25rem;
+}
+
+.cart-counter {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
