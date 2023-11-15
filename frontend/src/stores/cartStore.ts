@@ -4,9 +4,17 @@ import CartModel from 'models/cartModel'
 class CartStore {
   @observable accessor items: CartModel[] = []
 
+  constructor() {
+    const storedItems = localStorage.getItem('cartItems')
+    if (storedItems) {
+      this.items = JSON.parse(storedItems)
+    }
+  }
+
   @action
   addItem(item: CartModel): void {
     this.items.push(item)
+    this.saveToLocalStorage()
   }
 
   @action
@@ -15,12 +23,14 @@ class CartStore {
 
     if (itemToUpdate) {
       itemToUpdate.quantity = quantity
+      this.saveToLocalStorage()
     }
   }
 
   @action
   removeItem(itemId: number): void {
     this.items = this.items.filter((item) => item.product.id !== itemId)
+    this.saveToLocalStorage()
   }
 
   @action
@@ -30,7 +40,12 @@ class CartStore {
 
   @computed
   get totalItems(): number {
-    return this.items.reduce((sum, current) => sum + current.quantity, 0)
+    const total = this.items.reduce((sum, current) => sum + current.quantity, 0)
+    return isNaN(total) ? 0 : total
+  }
+
+  private saveToLocalStorage(): void {
+    localStorage.setItem('cartItems', JSON.stringify(this.items))
   }
 }
 
