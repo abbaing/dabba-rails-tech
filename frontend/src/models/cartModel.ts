@@ -3,7 +3,7 @@ import ProductModel from 'models/productModel'
 
 class CartModel {
   product: ProductModel
-  @observable accessor quantity: number
+  quantity: number
 
   constructor(product: ProductModel, quantity: number) {
     this.product = product
