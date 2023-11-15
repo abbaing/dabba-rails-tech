@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import cartService from 'services/CartService'
 import { formatCurrency } from 'utils/currencyUtils'
 import styles from './index.module.css'
+import cartStore from 'stores/cartStore'
 
 interface Props {
   item: CartModel
@@ -29,6 +30,10 @@ const CartItem = ({ item }: Props) => {
     }
   }
 
+  const onRemove = () => {
+    cartStore.removeItem(item.product.id)
+  }
+
   const product = item.product
 
   return (
@@ -36,7 +41,9 @@ const CartItem = ({ item }: Props) => {
       className={`${styles.container} cart-item d-md-flex justify-content-between`}
     >
       <div className='col-md-auto px-3 my-3'>
-        <button className='btn btn-sm btn-outline-secondary'>Remove</button>
+        <button className='btn btn-sm btn-outline-secondary' onClick={onRemove}>
+          Remove
+        </button>
       </div>
       <div className='col-md-5 px-3 my-3'>
         <h4>{product.name}</h4>
