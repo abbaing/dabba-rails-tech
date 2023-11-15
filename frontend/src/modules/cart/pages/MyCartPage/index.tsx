@@ -7,7 +7,7 @@ import './index.css'
 const MyCartPage = (): JSX.Element => {
   return (
     <Layout>
-      <h3>My Cart</h3>
+      <h1 className="display-5 pb-3 mb-3 border-bottom">My cart</h1>
       <div className='container my-cart-container'>
         <div className='row'>
           {cartStore.items.map((item) => (
