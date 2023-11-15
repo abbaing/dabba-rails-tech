@@ -9,7 +9,7 @@ interface Props {
 }
 
 const CartItem = ({ item }: Props) => {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(item.quantity)
 
   const oldPriceComponent = (price?: number) => {
     return <span className={styles['old-price']}>{formatCurrency(price)}</span>
@@ -18,14 +18,14 @@ const CartItem = ({ item }: Props) => {
   const handleIncrement = () => {
     let newCount = count + 1
     setCount(newCount)
-    cartService.updateCart(item.product, newCount)
+    cartService.updateCart(product, newCount)
   }
 
   const handleDecrement = () => {
     let newCount = count - 1
     if (newCount > 0) {
       setCount(newCount)
-      cartService.updateCart(item.product, newCount)
+      cartService.updateCart(product, newCount)
     }
   }
 
@@ -39,9 +39,9 @@ const CartItem = ({ item }: Props) => {
         <button className='btn btn-sm btn-outline-secondary'>Remove</button>
       </div>
       <div className='col-md-5 px-3 my-3'>
-        <h4>{item.product.name}</h4>
+        <h4>{product.name}</h4>
         <span className={`${styles['column-label']}`}>
-          <strong>Code:</strong> {item.product.code}
+          <strong>Code:</strong> {product.code}
         </span>
       </div>
       <div className='col-md-auto px-3 my-3 text-center'>
@@ -67,8 +67,8 @@ const CartItem = ({ item }: Props) => {
       <div className='col-md-auto px-3 my-3 text-center'>
         <div className={styles['column-label']}>Price</div>
         <span className='text-xl font-weight-medium'>
-          {item.product.oldPrice && oldPriceComponent(item.product.oldPrice)}
-          <span>{formatCurrency(item.product.price)}</span>
+          {product.oldPrice && oldPriceComponent(product.oldPrice)}
+          <span>{formatCurrency(product.price)}</span>
         </span>
       </div>
       <div className='col-md-auto px-3 my-3 text-center'>
