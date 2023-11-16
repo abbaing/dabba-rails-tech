@@ -1,9 +1,10 @@
 import CartModel from 'models/cartModel'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import cartService from 'services/CartService'
 import cartStore from 'stores/cartStore'
 import { formatCurrency } from 'utils/currencyUtils'
 import styles from './index.module.css'
+import { toast } from 'react-toastify'
 
 interface Props {
   item: CartModel
@@ -11,6 +12,23 @@ interface Props {
 
 const CartItem = ({ item }: Props) => {
   const [count, setCount] = useState(item.quantity)
+  const [subtotal, setSubtotal] = useState<number>()
+
+  useEffect(() => {
+    const fetchOptions = async (): Promise<void> => {
+      try {
+        const subtotalResponse = await cartService.calculateSubtotal(
+          item.product,
+          count
+        )
+        setSubtotal(subtotalResponse as number)
+      } catch (error) {
+        toast.error('There was a problem retrieving the data.')
+      }
+    }
+
+    void fetchOptions()
+  }, [count])
 
   const handleIncrement = () => {
     let newCount = count + 1
@@ -41,7 +59,10 @@ const CartItem = ({ item }: Props) => {
       return (
         <small className='text-body-secondary'>
           <span className='old-price'>{formatCurrency(product.price)}</span>
-          <span className='price'> {formatCurrency(product.promotionPrice)}</span>
+          <span className='price'>
+            {' '}
+            {formatCurrency(product.promotionPrice)}
+          </span>
         </small>
       )
     }
@@ -102,7 +123,11 @@ const CartItem = ({ item }: Props) => {
       </div>
       <div className='col-md-auto px-3 my-3 text-center'>
         <div className={styles['column-label']}>Subtotal</div>
-        <span className='text-xl font-weight-medium'>$35.00</span>
+        <span className='text-xl font-weight-medium'>
+          <small className='text-body-secondary'>
+            <span className='price'> {formatCurrency(subtotal)}</span>
+          </small>
+        </span>
       </div>
     </div>
   )

@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   resources :products
+
+  post "carts/subtotal", to: "carts#subtotal"
 end
