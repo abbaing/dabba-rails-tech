@@ -22,6 +22,10 @@
   padding-left: 0.25rem;
 }
 
+.price-badge {
+  margin-left: .75rem;
+}
+
 .cart-counter {
   margin-left: 0.75rem;
   margin-right: 0.75rem;

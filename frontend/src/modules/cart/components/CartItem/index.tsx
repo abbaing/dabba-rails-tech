@@ -1,9 +1,9 @@
 import CartModel from 'models/cartModel'
 import React, { useState } from 'react'
 import cartService from 'services/CartService'
+import cartStore from 'stores/cartStore'
 import { formatCurrency } from 'utils/currencyUtils'
 import styles from './index.module.css'
-import cartStore from 'stores/cartStore'
 
 interface Props {
   item: CartModel
@@ -11,10 +11,6 @@ interface Props {
 
 const CartItem = ({ item }: Props) => {
   const [count, setCount] = useState(item.quantity)
-
-  const oldPriceComponent = (price?: number) => {
-    return <span className={styles['old-price']}>{formatCurrency(price)}</span>
-  }
 
   const handleIncrement = () => {
     let newCount = count + 1
@@ -35,6 +31,35 @@ const CartItem = ({ item }: Props) => {
   }
 
   const product = item.product
+
+  const priceComponent = () => {
+    const hasPromotionPrice = product.promotionPrice
+    const hasPromotionQuantity = product.promotionQuantity
+    const applyPromotion = count === product.promotionQuantity
+
+    if (hasPromotionQuantity && applyPromotion && hasPromotionPrice) {
+      return (
+        <small className='text-body-secondary'>
+          <span className='old-price'>{formatCurrency(product.price)}</span>
+          <span className='price'> {formatCurrency(product.promotionPrice)}</span>
+        </small>
+      )
+    }
+    if (hasPromotionQuantity && applyPromotion) {
+      return (
+        <small className='text-body-secondary'>
+          <span className='price'> {formatCurrency(product.price)}</span>
+          <span className='price-badge badge text-bg-warning'>2X1</span>
+        </small>
+      )
+    } else {
+      return (
+        <small className='text-body-secondary'>
+          <span className='price'> {formatCurrency(product.price)}</span>
+        </small>
+      )
+    }
+  }
 
   return (
     <div
@@ -73,10 +98,7 @@ const CartItem = ({ item }: Props) => {
       </div>
       <div className='col-md-2 px-3 my-3 text-center'>
         <div className={styles['column-label']}>Price</div>
-        <span className='text-xl font-weight-medium'>
-          {product.oldPrice && oldPriceComponent(product.oldPrice)}
-          <span>{formatCurrency(product.price)}</span>
-        </span>
+        <span className='text-xl font-weight-medium'>{priceComponent()}</span>
       </div>
       <div className='col-md-auto px-3 my-3 text-center'>
         <div className={styles['column-label']}>Subtotal</div>
