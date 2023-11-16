@@ -1,36 +1,27 @@
 import Layout from 'layout'
 import ProductModel from 'models/productModel'
 import ProductItem from 'modules/product-list/components/ProductItem'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './index.css'
-
-const products: ProductModel[] = [
-  {
-    id: 1,
-    name: 'Product 1',
-    code: 'C01',
-    price: 12.12,
-    promotionMessage: 'Buy one, get one free',
-  },
-  {
-    id: 2,
-    name: 'Product 2',
-    code: 'C02',
-    price: 30,
-    promotionMessage: 'Price drops to €4.50 for 3 or more strawberries!',
-  },
-  {
-    id: 3,
-    name: 'Product 3',
-    code: 'C03',
-    price: 10.11,
-    oldPrice: 12.15,
-    promotionMessage:
-      'Price drops to 2/3 of the original price for 3 or more coffees!',
-  },
-]
+import productService from 'services/ProductService'
+import { toast } from 'react-toastify'
 
 const ProductListPage = (): JSX.Element => {
+  const [products, setProducts] = useState<ProductModel[]>([])
+
+  useEffect(() => {
+    const fetchOptions = async (): Promise<void> => {
+      try {
+        const industryResponse = await productService.getAll()
+        setProducts(industryResponse as ProductModel[])
+      } catch (error) {
+        toast.error('There was a problem retrieving the data.')
+      }
+    }
+
+    void fetchOptions()
+  }, [])
+
   return (
     <Layout>
       <h1 className="display-5 pb-3 mb-3 border-bottom">Product Catalog</h1>
