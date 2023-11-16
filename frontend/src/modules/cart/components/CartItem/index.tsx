@@ -46,6 +46,8 @@ const CartItem = ({ item }: Props) => {
 
   const onRemove = () => {
     cartStore.removeItem(item.product.id)
+
+    toast.info(`${item.product.name} removed from your cart!`)
   }
 
   const product = item.product
