@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   entry: './src/index.tsx',
@@ -17,7 +18,7 @@ module.exports = {
       stores: path.join(__dirname, 'src/stores'),
       services: path.join(__dirname, 'src/services'),
       models: path.join(__dirname, 'src/models'),
-    }
+    },
   },
   module: {
     rules: [
@@ -35,6 +36,13 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './public/index.html',
+    }),
+    new Dotenv({
+      path: path.resolve(
+        __dirname,
+        'config',
+        process.env.NODE_ENV === 'production' ? 'prod.env' : 'dev.env'
+      ),
     }),
   ],
   devServer: {
