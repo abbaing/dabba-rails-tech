@@ -1,20 +1,23 @@
 import { action, computed, observable } from 'mobx'
 import CartModel from 'models/cartModel'
+import {
+  CartStorage,
+  LocalStorageCartStorage,
+} from 'stores/localStorageCartStorage'
 
-class CartStore {
+export class CartStore {
   @observable accessor items: CartModel[] = []
+  private storage: LocalStorageCartStorage
 
-  constructor() {
-    const storedItems = localStorage.getItem('cartItems')
-    if (storedItems) {
-      this.items = JSON.parse(storedItems)
-    }
+  constructor(storage: CartStorage) {
+    this.storage = storage
+    this.items = this.storage.load()
   }
 
   @action
   addItem(item: CartModel): void {
     this.items.push(item)
-    this.saveToLocalStorage()
+    this.saveToStorage()
   }
 
   @action
@@ -23,14 +26,14 @@ class CartStore {
 
     if (itemToUpdate) {
       itemToUpdate.quantity = quantity
-      this.saveToLocalStorage()
+      this.saveToStorage()
     }
   }
 
   @action
   removeItem(itemId: number): void {
     this.items = this.items.filter((item) => item.product.id !== itemId)
-    this.saveToLocalStorage()
+    this.saveToStorage()
   }
 
   @action
@@ -40,14 +43,14 @@ class CartStore {
 
   @computed
   get totalItems(): number {
-    const total = this.items.reduce((sum, current) => sum + current.quantity, 0)
-    return isNaN(total) ? 0 : total
+    return this.items.reduce((sum, current) => sum + current.quantity, 0)
   }
 
-  private saveToLocalStorage(): void {
-    localStorage.setItem('cartItems', JSON.stringify(this.items))
+  private saveToStorage(): void {
+    this.storage.save(this.items)
   }
 }
 
-const cartStore = new CartStore()
+const cartStorage = new LocalStorageCartStorage()
+const cartStore = new CartStore(cartStorage)
 export default cartStore
