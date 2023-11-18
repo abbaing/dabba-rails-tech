@@ -22,8 +22,10 @@ Before you start, make sure your computer has the following things:
     Copy this code and paste it into your computer's command line:
 
     ```bash
-    git clone https://david_abba@bitbucket.org/david_abba/dabba-rails-tech.git
+    git clone https://bitbucket.org/david_abba/dabba-rails-tech.git
     ```
+
+    Also you can [see the code from this URL.](https://bitbucket.org/david_abba/dabba-rails-tech/src/master/)
 
 2. **Go to the Project Folder:**
 
