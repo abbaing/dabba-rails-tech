@@ -18,11 +18,11 @@ RSpec.describe ProductPresenter do
     it "returns the product attributes as a JSON hash" do
       expected_json = {
         id: 1,
-        code: "P002",
-        name: "My product 02",
+        code: "P001",
+        name: "My product",
         price: 20.0,
         promotionPrice: 15.0,
-        promotionMessage: "Another discount",
+        promotionMessage: "Special Offer",
         promotionQuantity: 2,
       }
 
