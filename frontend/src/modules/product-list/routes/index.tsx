@@ -5,8 +5,8 @@ import ProductListPage from 'modules/product-list/pages/ProductListPage'
 const ProductListRoutes = [
   {
     path: '/products',
-    element: <ProductListPage />
-  }
+    element: <ProductListPage />,
+  },
 ]
 
 export default ProductListRoutes

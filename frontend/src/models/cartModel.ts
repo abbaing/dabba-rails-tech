@@ -1,4 +1,3 @@
-import { observable } from 'mobx'
 import ProductModel from 'models/productModel'
 
 class CartModel {

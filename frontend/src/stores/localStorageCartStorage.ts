@@ -5,7 +5,7 @@ export interface CartStorage {
   load(): CartModel[]
 }
 
-export  class LocalStorageCartStorage implements CartStorage {
+export class LocalStorageCartStorage implements CartStorage {
   save(items: CartModel[]): void {
     localStorage.setItem('cartItems', JSON.stringify(items))
   }

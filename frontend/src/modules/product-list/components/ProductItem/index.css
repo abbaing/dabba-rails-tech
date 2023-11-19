@@ -1,19 +1,19 @@
 .old-price {
-    color: #858585;
-    text-decoration: line-through;
-    padding-left: .25rem;
+  color: #858585;
+  text-decoration: line-through;
+  padding-left: 0.25rem;
 }
 
 .price {
-    color: #444444;
-    font-weight: bold;
+  color: #444444;
+  font-weight: bold;
 }
 
 .price-badge {
-    margin-left: .75rem;
+  margin-left: 0.75rem;
 }
 
 .cart-counter {
-    margin-left: .75rem;
-    margin-right: .75rem;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
 }

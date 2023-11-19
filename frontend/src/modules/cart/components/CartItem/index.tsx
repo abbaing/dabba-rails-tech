@@ -1,10 +1,10 @@
 import CartModel from 'models/cartModel'
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import cartService from 'services/CartService'
 import cartStore from 'stores/cartStore'
 import { formatCurrency } from 'utils/currencyUtils'
 import styles from './index.module.css'
-import { toast } from 'react-toastify'
 
 interface Props {
   item: CartModel

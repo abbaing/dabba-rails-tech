@@ -2,9 +2,9 @@ import Layout from 'layout'
 import ProductModel from 'models/productModel'
 import ProductItem from 'modules/product-list/components/ProductItem'
 import React, { useEffect, useState } from 'react'
-import './index.css'
-import productService from 'services/ProductService'
 import { toast } from 'react-toastify'
+import productService from 'services/ProductService'
+import './index.css'
 
 const ProductListPage = (): JSX.Element => {
   const [products, setProducts] = useState<ProductModel[]>([])
@@ -24,7 +24,7 @@ const ProductListPage = (): JSX.Element => {
 
   return (
     <Layout>
-      <h1 className="display-5 pb-3 mb-3 border-bottom">Product Catalog</h1>
+      <h1 className='display-5 pb-3 mb-3 border-bottom'>Product Catalog</h1>
       <div className='container product-catalog-container'>
         <div className='row row-cols-md-3 g-4'>
           {products.map((item) => (

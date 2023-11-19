@@ -2,9 +2,9 @@ import Layout from 'layout'
 import { observer } from 'mobx-react-lite'
 import CartItem from 'modules/cart/components/CartItem/index'
 import React from 'react'
+import { toast } from 'react-toastify'
 import cartStore from 'stores/cartStore'
 import './index.css'
-import { toast } from 'react-toastify'
 
 const MyCartPage = observer((): JSX.Element => {
   const handleCheckout = () => {

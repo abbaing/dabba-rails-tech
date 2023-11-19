@@ -25,9 +25,9 @@ describe('CartUpdater', () => {
   })
 
   it('should add a new item to the cart if it does not exist', () => {
-    const quantity = 2;
-    
-    (cartStore.getItem as jest.Mock).mockReturnValue(undefined)
+    const quantity = 2
+
+    ;(cartStore.getItem as jest.Mock).mockReturnValue(undefined)
 
     cartUpdater.updateCart(product, quantity)
 
@@ -38,9 +38,9 @@ describe('CartUpdater', () => {
 
   it('should update the quantity of an existing item in the cart', () => {
     const quantity = 5
-    const existingCartItem = new CartModel(product, 3);
+    const existingCartItem = new CartModel(product, 3)
 
-    (cartStore.getItem as jest.Mock).mockReturnValue(existingCartItem)
+    ;(cartStore.getItem as jest.Mock).mockReturnValue(existingCartItem)
 
     cartUpdater.updateCart(product, quantity)
 
