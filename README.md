@@ -134,6 +134,7 @@ There are some tasks yet to be completed, including:
 
 - In order to enhance code quality and maintainability, the task involves implementing method signatures using Sorbet for optional static typing in Ruby. Additionally, RuboCop will be employed to enforce coding conventions and provide static analysis to ensure adherence to best practices and consistent coding standards within the Ruby on Rails project.
 - Implement interactors to perform basic operations such as create, update, delete, and bulk-delete.
+- Translate the app to use the multilingual system (i18n).
 
 Happy coding!
 
