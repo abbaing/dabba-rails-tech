@@ -9,9 +9,9 @@
 #   end
 
 # Products
-Product.create(product_code: "GR1", name: "Green Tea", price: 3.11, discount_quantity: 2, discount_price: nil, discount_description: "Buy One, Get One Free on Green Tea")
-Product.create(product_code: "SR1", name: "Strawberries", price: 5.00, discount_quantity: 3, discount_price: 4.50, discount_description: "Special Price for Strawberries: 4.50€ each when you buy 3 or more")
-Product.create(product_code: "CF1", name: "Coffee", price: 11.23, discount_quantity: 3, discount_price: 2 / 3.to_d * 11.23, discount_description: "Bulk Discount on Coffee: 2/3 of the original price when you buy 3 or more")
+Product.create(product_code: "GR1", name: "Green Tea", price: 3.11, discount_quantity: 2, discount_price: nil, discount_description: "Buy One, Get One Free on Green Tea", active: true, company_id: 1)
+Product.create(product_code: "SR1", name: "Strawberries", price: 5.00, discount_quantity: 3, discount_price: 4.50, discount_description: "Special Price for Strawberries: 4.50€ each when you buy 3 or more", active: true, company_id: 1)
+Product.create(product_code: "CF1", name: "Coffee", price: 11.23, discount_quantity: 3, discount_price: 2 / 3.to_d * 11.23, discount_description: "Bulk Discount on Coffee: 2/3 of the original price when you buy 3 or more", active: true, company_id: 1)
 
 # Purchases
 purchase1 = Purchase.create(purchase_date: "2023-11-07", total_price: 3.11)
