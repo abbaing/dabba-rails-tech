@@ -1,38 +1,41 @@
 class BaseBoundary
-
     def find_all
-        filtered_entities = filter_by_active(entities)
-            if respond_to?(:filter_by_active)
-        filtered_entities = filter_by_company(filtered_entities)
-            if respond_to?(:filter_by_company)
-        filtered_entities = filter_by_user_id(filtered_entities)
-            if respond_to?(:filter_by_user_id)
-        filtered_entities
+      apply_filters(entities)
     end
-
+  
     def find_by_id(id:)
-        entity.find(id)
+      entity.find(id).tap do |found_entity|
+        raise ActiveRecord::RecordNotFound unless apply_filters([found_entity]).include?(found_entity)
+      end
     end
-
+  
     private
-
+  
     def entities
-        entity.all
+      entity.all
     end
-
+  
+    def apply_filters(entities)
+      entities = filter_by_active(entities) if respond_to?(:filter_by_active)
+      entities = filter_by_company(entities) if respond_to?(:filter_by_company)
+      entities = filter_by_user_id(entities) if respond_to?(:filter_by_user_id)
+      entities
+    end
+  
     def filter_by_active(filtered_entities)
-        raise NotImplementedError
+      raise NotImplementedError
     end
-
+  
     def filter_by_company(filtered_entities)
-        raise NotImplementedError
+      raise NotImplementedError
     end
-
+  
     def filter_by_user_id(filtered_entities)
-        raise NotImplementedError
+      raise NotImplementedError
     end
-
+  
     def entity
-        raise NotImplementedError
+      raise NotImplementedError
     end
-end
+  end
+  
