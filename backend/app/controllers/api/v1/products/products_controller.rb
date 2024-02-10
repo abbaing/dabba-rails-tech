@@ -4,28 +4,53 @@ module Api
       class ProductsController < ApplicationController
 
         def index
-          @entities = boundary.find_all
-          render json: entities
+          @result = boundary.find_all
+
+          if @result
+            render json: { data: @result }
+          else
+            render json: {}, status: 200
+          end
         end
       
         def show
-          @entity = boundary.find_by_id(params[:id])
-          render json: @entity
+          @result = boundary.find_by_id(params[:id])
+
+          if @result
+            render json: { data: @result }
+          else
+            render json: {}, status: 200
+          end
         end
       
         def create
-          @product = create_interactor.call(product_params)
-          render json: @product, status: :created
+          @result = create_interactor.call(product_params)
+
+          if @product
+            render json: { data: @result }, status: 201
+          else
+            render json: { errors: create_interactor.errors.details }, status: 422
+          end
         end
       
         def update
-          @product = update_interactor.call(params[:id], product_params)
-          render json: @product
+          @result = update_interactor.call(params[:id], product_params)
+
+          if @result
+            render json: { data: @result }, status: 201
+          else
+            render json: { errors: create_interactor.errors.details }, status: 422
+          end
         end
       
         def destroy
-          delete_interactor.call(params[:id])
-          head :no_content
+          @result = delete_interactor.call(params[:id])
+
+          if @result
+            head :no_content
+          else
+            render json: { errors: create_interactor.errors.details }, status: 422
+          end
         end
       
         private

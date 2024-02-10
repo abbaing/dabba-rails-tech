@@ -3,19 +3,23 @@ module Products
         class Create
             def initialize(params)
                 @params = params
+                @errors = []
             end
 
             def call
-              entity = repository.create(params)
-
-              return nil unless entity
-          
-              serialize(entity)
+              entity = repository.new(params)
+              if entity.save
+                serialize(entity)
+              else
+                @errors = entity.errors.details
+                nil
+              end
             end
 
             private
 
             attr_reader :params
+            attr_reader :errors
 
             def serialize(product)
               ProductPresenter.new(product).as_json

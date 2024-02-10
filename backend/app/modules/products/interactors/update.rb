@@ -4,24 +4,30 @@ module Products
             def initialize(id, params)
                 @id = id
                 @params = params
+                @errors = []
             end
 
             def call
               entity = boundary.find_by_id(id)
 
-              return nil unless entity
-
-              entity = repository.update(id, params)
-
-              return nil unless entity
-          
-              serialize(entity)
+              if entity
+                if repository.update(id, params)
+                  entity
+                else
+                  @errors = entity.errors.details
+                  nil
+                end
+              else
+                @errors = [{ id: [{ error: 'not found' }] }]
+                nil
+              end
             end
 
             private
 
             attr_reader :id
             attr_reader :params
+            attr_reader :errors
 
             def serialize(product)
               ProductPresenter.new(product).as_json
