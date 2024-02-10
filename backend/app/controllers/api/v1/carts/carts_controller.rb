@@ -7,18 +7,22 @@ module Api
         skip_before_action :verify_authenticity_token, only: [:subtotal]
 
         def subtotal
-          item = params[:id]
-          quantity = params[:quantity].to_i
+          @result = interactor.calculate
 
-          subtotal = repository.calculate_subtotal(item, quantity)
-
-          render json: { subtotal: subtotal }
+          if @product
+            render json: { data: @result }, status: 201
+          else
+            render json: { errors: create_interactor.errors.details }, status: 422
+          end
         end
 
         private
 
-        def repository
-          CartsRepository.new
+        def interactor
+          Cart::Interactors::SubtotalCalculator.new(
+            product_id: params[:id]
+            quantity: params[:quantity].to_i
+          )
         end
       end
     end
