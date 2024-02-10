@@ -14,10 +14,6 @@ class BaseRepository
         entities.find(id)
     end
 
-    def create(attributes)
-        entities.new attributes
-    end
-
     delegate :find_or_create_by, :find_or_initialize_by, :find_by, :all, to: :entity
     delegate :create, :new, :where, to: :entity
     delegate :update, :update!, :save, :save!, :destroy, :destroy!, to: :data
