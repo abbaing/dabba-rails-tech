@@ -43,12 +43,12 @@ module Api
       end
     
       def destroy
-        @result = delete_interactor.call(params[:id])
+        result = delete_interactor.call
 
-        if @result
+        if result
           head :no_content
         else
-          render json: { errors: create_interactor.errors.details }, status: 422
+          render json: { errors: delete_interactor.errors.details }, status: 422
         end
       end
     
@@ -72,6 +72,10 @@ module Api
 
       def update_interactor
         ::Products::Update.new(company_id, id, product_params)
+      end
+
+      def delete_interactor
+        ::Products::Delete.new(company_id, id)
       end
     end
   end      
