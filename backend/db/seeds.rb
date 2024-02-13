@@ -9,9 +9,9 @@
 #   end
 
 # Products
-Product.create(code: "GR1", name: "Green Tea", price: 3.11, discount_quantity: 2, discount_price: nil, discount_description: "Buy One, Get One Free on Green Tea", active: true, company_id: 1)
-Product.create(code: "SR1", name: "Strawberries", price: 5.00, discount_quantity: 3, discount_price: 4.50, discount_description: "Special Price for Strawberries: 4.50€ each when you buy 3 or more", active: true, company_id: 1)
-Product.create(code: "CF1", name: "Coffee", price: 11.23, discount_quantity: 3, discount_price: 2 / 3.to_d * 11.23, discount_description: "Bulk Discount on Coffee: 2/3 of the original price when you buy 3 or more", active: true, company_id: 1)
+Product.create(code: "GR1", name: "Green Tea", price: 3.11, active: true, company_id: 1)
+Product.create(code: "SR1", name: "Strawberries", price: 5.00, active: true, company_id: 1)
+Product.create(code: "CF1", name: "Coffee", price: 11.23, active: true, company_id: 1)
 
 # Purchases
 purchase1 = Purchase.create(purchase_date: "2023-11-07", total_price: 3.11)
@@ -26,3 +26,26 @@ PurchaseDetail.create(purchase: purchase3, product: Product.find_by(code: "GR1")
 PurchaseDetail.create(purchase: purchase3, product: Product.find_by(code: "CF1"), quantity: 1)
 PurchaseDetail.create(purchase: purchase3, product: Product.find_by(code: "SR1"), quantity: 1)
 PurchaseDetail.create(purchase: purchase3, product: Product.find_by(code: "CF1"), quantity: 2)
+
+# Green Tea (GR1) - Buy One Get One Free
+ProductRule.create!(
+  product: Product.find_by(code: 'GR1'),
+  rule_type: 'buy_one_get_one_free',
+  description: 'Buy one get one free offer'
+)
+
+# Strawberries (SR1) - Bulk Discount
+ProductRule.create!(
+  product: Product.find_by(code: 'SR1'),
+  rule_type: 'bulk_discount',
+  rule_parameter: 4.50, # discounted price
+  description: 'Bulk discount for 3 or more strawberries'
+)
+
+# Coffee (CF1) - Coffee Addict Discount
+ProductRule.create!(
+  product: Product.find_by(code: 'CF1'),
+  rule_type: 'coffee_discount',
+  rule_parameter: 2/3.0, # discounted price ratio
+  description: 'Discount for buying 3 or more coffees'
+)

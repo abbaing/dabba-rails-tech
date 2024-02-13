@@ -11,6 +11,16 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 2023_11_16_114718) do
+  create_table "product_rules", force: :cascade do |t|
+    t.integer "product_id"
+    t.string "rule_type"
+    t.decimal "rule_parameter"
+    t.string "description"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "products", force: :cascade do |t|
     t.string "code"
     t.string "name"
@@ -19,9 +29,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_16_114718) do
     t.integer "company_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "discount_quantity"
-    t.decimal "discount_price"
-    t.string "discount_description"
   end
 
   create_table "purchase_details", force: :cascade do |t|
