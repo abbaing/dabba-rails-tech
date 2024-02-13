@@ -1,4 +1,6 @@
-RSpec.describe ProductPresenter do
+require 'rails_helper'
+
+RSpec.describe Products::ProductPresenter do
   let(:product) do
     double(
       "Product",
@@ -12,7 +14,7 @@ RSpec.describe ProductPresenter do
     )
   end
 
-  let(:product_presenter) { ProductPresenter.new(product) }
+  let(:product_presenter) { described_class.new(product) }
 
   describe "#as_json" do
     it "returns the product attributes as a JSON hash" do
