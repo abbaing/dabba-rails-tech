@@ -13,7 +13,7 @@ module Products
       entity = boundary.find_by_id(id: id)
     
       if entity
-        if repository.update(id, params)
+        if entity.update(params)
           entity
         else
           if entity.errors.is_a?(ActiveModel::Errors)
@@ -37,10 +37,6 @@ module Products
 
     def serialize(product)
       Products::ProductPresenter.new(product).as_json
-    end
-
-    def repository
-      Products::ProductsRepository.new(nil)
     end
 
     def boundary

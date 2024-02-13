@@ -33,12 +33,12 @@ module Api
       end
     
       def update
-        @result = update_interactor.call(params[:id], product_params)
+        result = update_interactor.call
 
-        if @result
-          render json: { data: @result }, status: 201
+        if result
+          render json: { data: result }, status: 201
         else
-          render json: { errors: create_interactor.errors.details }, status: 422
+          render json: { errors: update_interactor.errors.details }, status: 422
         end
       end
     
@@ -68,6 +68,10 @@ module Api
 
       def create_interactor
         ::Products::Create.new(company_id, product_params)
+      end
+
+      def update_interactor
+        ::Products::Update.new(company_id, id, product_params)
       end
     end
   end      
