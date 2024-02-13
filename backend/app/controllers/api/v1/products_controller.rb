@@ -3,20 +3,20 @@ module Api
     class ProductsController < ApplicationController
 
       def index
-        @result = ::Products::ReadAll.new(company_id).call
+        result = ::Products::ReadAll.new(company_id).call
 
-        if @result
-          render json: { data: @result }
+        if result
+          render json: result
         else
           render json: {}, status: 200
         end
       end
     
       def show
-        @result = ::Products::ReadOne.new(company_id, id).call
+        result = ::Products::ReadOne.new(company_id, id).call
 
-        if @result
-          render json: { data: @result }
+        if result
+          render json: result
         else
           render json: {}, status: 200
         end
@@ -26,7 +26,7 @@ module Api
         result = create_interactor.call
 
         if result
-          render json: { data: result }, status: 201
+          render json: result, status: 201
         else
           render json: { errors: create_interactor.errors.details }, status: 422
         end
@@ -36,7 +36,7 @@ module Api
         result = update_interactor.call
 
         if result
-          render json: { data: result }, status: 201
+          render json: result, status: 201
         else
           render json: { errors: update_interactor.errors.details }, status: 422
         end

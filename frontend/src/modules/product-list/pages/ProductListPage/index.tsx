@@ -12,8 +12,8 @@ const ProductListPage = (): JSX.Element => {
   useEffect(() => {
     const fetchOptions = async (): Promise<void> => {
       try {
-        const industryResponse = await productService.getAll()
-        setProducts(industryResponse as ProductModel[])
+        const response = await productService.getAll()
+        setProducts(response as ProductModel[])
       } catch (error) {
         toast.error('There was a problem retrieving the data.')
       }

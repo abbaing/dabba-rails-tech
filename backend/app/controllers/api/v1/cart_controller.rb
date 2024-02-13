@@ -6,12 +6,12 @@ module Api
       skip_before_action :verify_authenticity_token, only: [:subtotal]
 
       def subtotal
-        @result = interactor.calculate
+        result = interactor.calculate
 
-        if @product
-          render json: { data: @result }, status: 201
+        if product
+          render json: result, status: 201
         else
-          render json: { errors: create_interactor.errors.details }, status: 422
+          render json: { errors: interactor.errors.details }, status: 422
         end
       end
 
