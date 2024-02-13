@@ -23,10 +23,10 @@ module Api
       end
     
       def create
-        @result = ::Products::Create.new(company_id, params).call
+        result = create_interactor.call
 
-        if @product
-          render json: { data: @result }, status: 201
+        if result
+          render json: { data: result }, status: 201
         else
           render json: { errors: create_interactor.errors.details }, status: 422
         end
@@ -64,6 +64,10 @@ module Api
 
       def id
         params[:id]
+      end
+
+      def create_interactor
+        ::Products::Create.new(company_id, product_params)
       end
     end
   end      

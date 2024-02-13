@@ -10,6 +10,7 @@ module Products
 
     def call
       params[:company_id] = company_id
+      params[:active] = true
       entity = repository.new(params)
       if entity.save
         serialize(entity)
