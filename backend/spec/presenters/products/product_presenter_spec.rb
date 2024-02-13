@@ -5,7 +5,7 @@ RSpec.describe Products::ProductPresenter do
     double(
       "Product",
       id: 1,
-      product_code: "P001",
+      code: "P001",
       name: "My product",
       price: 20.0,
       discount_price: 15.0,

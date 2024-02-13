@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema[7.1].define(version: 2023_11_16_114718) do
   create_table "products", force: :cascade do |t|
-    t.string "product_code"
+    t.string "code"
     t.string "name"
     t.decimal "price"
     t.boolean "active"

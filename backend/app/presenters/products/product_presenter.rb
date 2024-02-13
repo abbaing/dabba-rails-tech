@@ -7,7 +7,7 @@ module Products
     def as_json
       {
         id: @product.id,
-        code: @product.product_code,
+        code: @product.code,
         name: @product.name,
         price: @product.price,
         promotionPrice: @product.discount_price,
