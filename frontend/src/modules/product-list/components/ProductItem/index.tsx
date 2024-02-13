@@ -65,9 +65,12 @@ const ProductItem = ({ item }: Props) => {
           <h5 className='card-title'>{item.name}</h5>
           <p className='card-text'>Code {item.code}</p>
           <p className='card-text'>{priceComponent()}</p>
-          <div className='alert alert-primary' role='alert'>
-            {item.promotionMessage}
-          </div>
+          {item.promotionMessage &&
+            <div className='alert alert-primary' role='alert'>
+              <h5 className="alert-heading">Hey! Promos here:</h5>
+              <hr />
+              <p>{item.promotionMessage}</p>
+            </div>}
         </div>
         <div className='card-footer'>
           {!showSelector && (

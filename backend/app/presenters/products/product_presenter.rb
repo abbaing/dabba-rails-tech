@@ -10,6 +10,7 @@ module Products
         code: @product.code,
         name: @product.name,
         price: @product.price,
+        promotionMessage: @product.rule_descriptions
       }
     end
   end
