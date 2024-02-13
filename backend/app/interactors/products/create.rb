@@ -2,12 +2,14 @@ module Products
   class Create
     attr_reader :errors
     
-    def initialize(params)
+    def initialize(company_id, params)
+      @company_id = company_id
       @params = params
       @errors = []
     end
 
     def call
+      params[:company_id] = company_id
       entity = repository.new(params)
       if entity.save
         serialize(entity)
@@ -19,6 +21,7 @@ module Products
 
     private
 
+    attr_reader :company_id
     attr_reader :params
 
     def serialize(product)

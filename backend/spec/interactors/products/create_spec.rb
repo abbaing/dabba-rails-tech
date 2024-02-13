@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Products::Create do
+  let(:company_id) { 1 }
   let(:params) { { name: 'Test Product', price: 10.99 } }
-  let(:subject) { described_class.new(params) }
+  let(:subject) { described_class.new(company_id, params) }
 
   describe '#call' do
     context 'when entity is successfully saved' do
