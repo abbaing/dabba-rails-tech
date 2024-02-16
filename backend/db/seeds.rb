@@ -31,6 +31,7 @@ PurchaseDetail.create(purchase: purchase3, product: Product.find_by(code: "CF1")
 ProductRule.create!(
   product: Product.find_by(code: 'GR1'),
   rule_type: 'buy_one_get_one_free',
+  rule_minimum_quantity: 2,
   description: 'Buy one get one free offer'
 )
 
@@ -39,6 +40,7 @@ ProductRule.create!(
   product: Product.find_by(code: 'SR1'),
   rule_type: 'bulk_discount',
   rule_parameter: 4.50, # discounted price
+  rule_minimum_quantity: 3,
   description: 'Bulk discount for 3 or more strawberries'
 )
 
@@ -47,5 +49,6 @@ ProductRule.create!(
   product: Product.find_by(code: 'CF1'),
   rule_type: 'coffee_discount',
   rule_parameter: 2/3.0, # discounted price ratio
+  rule_minimum_quantity: 3,
   description: 'Discount for buying 3 or more coffees'
 )

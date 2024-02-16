@@ -15,6 +15,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_16_114718) do
     t.integer "product_id"
     t.string "rule_type"
     t.decimal "rule_parameter"
+    t.integer "rule_minimum_quantity"
     t.string "description"
     t.boolean "active", default: true
     t.datetime "created_at", null: false
