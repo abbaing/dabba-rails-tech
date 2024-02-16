@@ -7,14 +7,15 @@ module Cart
     end
   
     def calculate
-      product = products_boundary.find_by_id(id: product_id)
+      product = find_product
+
       return 0 unless product.company_id == company_id
       return 0 unless product
-
-      subtotal = quantity * product.price
-      subtotal += apply_rules(product, subtotal)
-
-      subtotal
+      
+      base_price = product.price
+      discount = calculate_discount(product, quantity)
+  
+      (base_price * quantity) - discount
     end
   
     private
@@ -23,26 +24,59 @@ module Cart
     attr_reader :product_id
     attr_reader :quantity
   
-    def apply_rules(product, subtotal)
-      rules = ProductRule.where(product_id: product.id, active: true)
-      total_adjustment = 0
-  
-      rules.each do |rule|
-        total_adjustment += calculate_rule_adjustment(rule, subtotal)
-      end
-  
-      total_adjustment
+    private
+
+    def find_product
+      products_boundary.find_by_id(id: @product_id)
     end
+
+    def calculate_discount(product, quantity)
+      rule = find_applicable_rule(product, quantity)
   
-    def calculate_rule_adjustment(rule, subtotal)
-      case rule.rule_type
-      when "discount_percentage"
-        subtotal * (rule.rule_parameter / 100)
-      when "discount_fixed"
-        rule.rule_parameter
-      # new rules here
+      if rule
+        rule_type = rule.rule_type
+        rule_parameter = rule.rule_parameter
+  
+        case rule_type
+        when "buy_one_get_one_free"
+          if quantity >= 2
+            quantity / 2 * base_price
+          else
+            0
+          end
+        when "bulk_discount"
+          if quantity >= rule.rule_minimum_quantity
+            # Calculate discounted price for entire quantity
+            quantity * rule_parameter
+          else
+            0
+          end
+        when "coffee_discount"
+          if quantity >= rule.rule_minimum_quantity
+            # Calculate discounted price per unit and apply to each unit
+            base_price * rule_parameter * quantity
+          else
+            0
+          end
+        end
       else
         0
+      end
+    end
+  
+    def find_applicable_rule(product, quantity)
+      ProductRule.active
+        .where(product_id: @product_id)
+        .order(rule_priority: :desc)
+        .find { |rule| rule_applies?(rule, quantity) }
+    end
+  
+    def rule_applies?(rule, quantity)
+      case rule.rule_type
+      when "buy_one_get_one_free"
+        quantity >= rule.rule_minimum_quantity
+      when "bulk_discount", "coffee_discount"
+        quantity >= rule.rule_minimum_quantity
       end
     end
   
