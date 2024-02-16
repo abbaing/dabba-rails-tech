@@ -8,17 +8,12 @@ module Cart
   
     def calculate
       product = products_boundary.find_by_id(id: product_id)
-    
+      return 0 unless product.company_id == company_id
       return 0 unless product
 
       subtotal = quantity * product.price
-    
-      if product.discount_quantity && product.discount_price
-        subtotal = apply_discount(product)
-      elsif product.discount_quantity && product.discount_price.nil?
-        subtotal = apply_buy_one_get_one_free(product)
-      end
-    
+      subtotal += apply_rules(product, subtotal)
+
       subtotal
     end
   
@@ -28,14 +23,27 @@ module Cart
     attr_reader :product_id
     attr_reader :quantity
   
-    def apply_discount(product)
-      quantity >= product.discount_quantity ? 
-        quantity * product.discount_price : 
-        quantity * product.price
+    def apply_rules(product, subtotal)
+      rules = ProductRule.where(product_id: product.id, active: true)
+      total_adjustment = 0
+  
+      rules.each do |rule|
+        total_adjustment += calculate_rule_adjustment(rule, subtotal)
+      end
+  
+      total_adjustment
     end
   
-    def apply_buy_one_get_one_free(product)
-      (quantity / 2) * product.price + (quantity % 2) * product.price
+    def calculate_rule_adjustment(rule, subtotal)
+      case rule.rule_type
+      when "discount_percentage"
+        subtotal * (rule.rule_parameter / 100)
+      when "discount_fixed"
+        rule.rule_parameter
+      # new rules here
+      else
+        0
+      end
     end
   
     def products_boundary

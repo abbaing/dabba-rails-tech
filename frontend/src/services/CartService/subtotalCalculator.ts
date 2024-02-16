@@ -9,7 +9,7 @@ class SubtotalCalculator {
     quantity: number
   ): Promise<number> {
     try {
-      const response = await axios.post(`${API_BASE_URL}/carts/subtotal`, {
+      const response = await axios.post(`${API_BASE_URL}/cart/subtotal`, {
         id: item.id,
         quantity,
       })
