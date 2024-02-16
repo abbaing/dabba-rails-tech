@@ -13,6 +13,9 @@ interface Props {
 const CartItem = ({ item }: Props) => {
   const [count, setCount] = useState(item.quantity)
   const [subtotal, setSubtotal] = useState<number>()
+  const [twoPlusOne, setTwoPlusOne] = useState<boolean>()
+  const [discountPrice, setDiscountPrice] = useState<boolean>()
+  const [promotion, setPromotion] = useState<string>()
 
   useEffect(() => {
     const fetchOptions = async (): Promise<void> => {
@@ -21,7 +24,10 @@ const CartItem = ({ item }: Props) => {
           item.product,
           count
         )
-        setSubtotal(subtotalResponse as number)
+        setSubtotal(subtotalResponse.subtotal as number)
+        setTwoPlusOne(subtotalResponse.two_plus_one as boolean)
+        setDiscountPrice(subtotalResponse.discount_price as boolean)
+        setPromotion(subtotalResponse.promotion as string)
       } catch (error) {
         toast.error('There was a problem retrieving the data.')
       }
@@ -53,35 +59,19 @@ const CartItem = ({ item }: Props) => {
   const product = item.product
 
   const priceComponent = () => {
-    const hasPromotionPrice = product.promotionPrice
-    const hasPromotionQuantity = product.promotionQuantity
-    const applyPromotion = count === product.promotionQuantity
+    return (
+      <small className='text-body-secondary'>
+        <span className='price'> {formatCurrency(product.price)}</span>
+      </small>
+    )
+  }
 
-    if (hasPromotionQuantity && applyPromotion && hasPromotionPrice) {
-      return (
-        <small className='text-body-secondary'>
-          <span className='old-price'>{formatCurrency(product.price)}</span>
-          <span className='price'>
-            {' '}
-            {formatCurrency(product.promotionPrice)}
-          </span>
-        </small>
-      )
-    }
-    if (hasPromotionQuantity && applyPromotion) {
-      return (
-        <small className='text-body-secondary'>
-          <span className='price'> {formatCurrency(product.price)}</span>
-          <span className='price-badge badge text-bg-warning'>2X1</span>
-        </small>
-      )
-    } else {
-      return (
-        <small className='text-body-secondary'>
-          <span className='price'> {formatCurrency(product.price)}</span>
-        </small>
-      )
-    }
+  const subtotalComponent = () => {
+    return (
+      <small className='text-body-secondary'>
+        <span className='price'> {formatCurrency(subtotal)}</span>
+      </small>
+    )
   }
 
   return (
@@ -98,6 +88,9 @@ const CartItem = ({ item }: Props) => {
         <span className={`${styles['column-label']}`}>
           <strong>Code:</strong> {product.code}
         </span>
+        {discountPrice && <span className='price-badge badge text-bg-info'>Promo!</span>}
+        {twoPlusOne && <span className='price-badge badge text-bg-warning'>2X1</span>}
+        {promotion && <div><span className='fs-6 text-muted'>{promotion}</span></div>}
       </div>
       <div className='col-md-auto px-3 my-3 text-center'>
         <div className={styles['column-label']}>Quantity</div>
@@ -125,11 +118,7 @@ const CartItem = ({ item }: Props) => {
       </div>
       <div className='col-md-auto px-3 my-3 text-center'>
         <div className={styles['column-label']}>Subtotal</div>
-        <span className='text-xl font-weight-medium'>
-          <small className='text-body-secondary'>
-            <span className='price'> {formatCurrency(subtotal)}</span>
-          </small>
-        </span>
+        <span className='text-xl font-weight-medium'>{subtotalComponent()}</span>
       </div>
     </div>
   )

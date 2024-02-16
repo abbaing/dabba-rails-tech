@@ -21,7 +21,7 @@ export class CartService {
   async calculateSubtotal(
     item: ProductModel,
     quantity: number
-  ): Promise<number> {
+  ): Promise<any> {
     return this.subtotalCalculator.calculateSubtotal(item, quantity)
   }
 }

@@ -15,7 +15,18 @@ module Cart
       base_price = product.price
       discount = calculate_discount(base_price, product, quantity)
   
-      (base_price * quantity) - discount
+      subtotal = (base_price * quantity) - discount
+
+      rule = find_applicable_rule(product, quantity)
+      two_plus_one = is_buy_one_get_one_free?(rule, quantity)
+      discount_price = is_discount_price?(rule, quantity)
+
+      { 
+        subtotal: subtotal,
+        two_plus_one: two_plus_one,
+        discount_price: discount_price,
+        promotion: rule&.description || ""
+      }
     end
   
     private
@@ -77,6 +88,20 @@ module Cart
       when "bulk_discount", "coffee_discount"
         quantity >= rule.rule_minimum_quantity
       end
+    end
+
+    def is_buy_one_get_one_free?(rule, quantity)
+      return false unless rule
+      return false unless quantity
+      quantity >= 2 && rule.rule_type == "buy_one_get_one_free"
+    end
+
+    def is_discount_price?(rule, quantity)
+      return false unless rule
+      return false unless quantity
+      quantity >= rule.rule_minimum_quantity &&
+      (rule.rule_type == "bulk_discount" || 
+      rule.rule_type == "coffee_discount")
     end
   
     def products_boundary

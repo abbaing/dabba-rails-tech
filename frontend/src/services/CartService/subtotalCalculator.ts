@@ -7,13 +7,13 @@ class SubtotalCalculator {
   async calculateSubtotal(
     item: ProductModel,
     quantity: number
-  ): Promise<number> {
+  ): Promise<any> {
     try {
       const response = await axios.post(`${API_BASE_URL}/cart/subtotal`, {
         id: item.id,
         quantity,
       })
-      return response.data.subtotal as number
+      return response.data
     } catch (error) {
       throw new Error(`Error fetching subtotal`)
     }

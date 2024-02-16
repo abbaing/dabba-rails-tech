@@ -6,7 +6,7 @@ module Api
         result = interactor.calculate
 
         if result
-          render json: { subtotal: result }, status: 201
+          render json: result, status: 201
         else
           render json: { errors: interactor.errors.details }, status: 422
         end
