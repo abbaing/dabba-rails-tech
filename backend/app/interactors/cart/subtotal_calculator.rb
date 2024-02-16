@@ -13,7 +13,7 @@ module Cart
       return 0 unless product
       
       base_price = product.price
-      discount = calculate_discount(product, quantity)
+      discount = calculate_discount(base_price, product, quantity)
   
       (base_price * quantity) - discount
     end
@@ -30,7 +30,7 @@ module Cart
       products_boundary.find_by_id(id: @product_id)
     end
 
-    def calculate_discount(product, quantity)
+    def calculate_discount(base_price, product, quantity)
       rule = find_applicable_rule(product, quantity)
   
       if rule
@@ -65,9 +65,8 @@ module Cart
     end
   
     def find_applicable_rule(product, quantity)
-      ProductRule.active
+      ProductRule
         .where(product_id: @product_id)
-        .order(rule_priority: :desc)
         .find { |rule| rule_applies?(rule, quantity) }
     end
   
