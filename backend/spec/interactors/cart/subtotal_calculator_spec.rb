@@ -2,85 +2,140 @@ require 'rails_helper'
 
 RSpec.describe Cart::SubtotalCalculator do
   let(:company_id) { 1 }
-  let(:product) { double('Product', id: 123, price: 10, discount_quantity: nil, discount_price: nil) }
-  let(:product_id) { product.id }
-  let(:boundary) { instance_double('Products::ProductsBoundary') }
-  subject { described_class.new(company_id, product_id, quantity) }
-
+  let(:product_id) { 1 }
+  let(:quantity) { 5 }
+  let(:calculator) { Cart::SubtotalCalculator.new(company_id, product_id, quantity) }
+  let(:product) { double('Product', company_id: company_id, price: 10) }
+  let(:product_rule) { double('Product Rule') }
+  let(:product_rules) { double('Product Rules') }
+  
   before do
-    allow(Products::ProductsBoundary).to receive(:new).with(company_id).and_return(boundary)
-    allow(boundary).to receive(:find_by_id).with(id: product_id).and_return(product)
+    allow_any_instance_of(Cart::SubtotalCalculator).to receive(:find_product).and_return(product)
+    allow(ProductRule).to receive(:where).and_return(product_rules)
   end
 
-  context "with quantity discount" do
-    let(:quantity) { 3 }
+  describe '#calculate' do
+    context 'when product belongs to the given company and product exists' do
+      let(:product_rules) { nil }
 
-    before do
-      allow(product).to receive(:discount_quantity).and_return(2)
-      allow(product).to receive(:discount_price).and_return(8)
+      it 'returns the correct subtotal without any discounts' do
+        expect(calculator.calculate[:subtotal]).to eq(50)
+      end
+      
+      it 'returns two_plus_one false' do
+        expect(calculator.calculate[:two_plus_one]).to be_falsey
+      end
+      
+      it 'returns discount_price false' do
+        expect(calculator.calculate[:discount_price]).to be_falsey
+      end
+      
+      it 'returns an empty string for promotion' do
+        expect(calculator.calculate[:promotion]).to eq('')
+      end
+    end
+    
+    context 'when product does not exist' do
+      before do
+        allow_any_instance_of(Cart::SubtotalCalculator).to receive(:find_product).and_return(nil)
+      end
+      
+      it 'returns 0 as subtotal' do
+        expect(calculator.calculate[:subtotal]).to eq(0)
+      end
+      
+      it 'returns false for two_plus_one' do
+        expect(calculator.calculate[:two_plus_one]).to be_falsey
+      end
+      
+      it 'returns false for discount_price' do
+        expect(calculator.calculate[:discount_price]).to be_falsey
+      end
+      
+      it 'returns an empty string for promotion' do
+        expect(calculator.calculate[:promotion]).to eq('')
+      end
     end
 
-    it "calculates subtotal with quantity discount" do
-      expect(subject.calculate).to eq(24)
+    context 'when there is a bulk discount rule and quantity is greater than or equal to rule minimum quantity' do
+      let(:product_rules) { [
+        double(
+          'Bulk Discount Rule', 
+          rule_type: 'coffee_discount', 
+          rule_minimum_quantity: 2, 
+          rule_parameter: 0.5, 
+          description: 'Bulk Discount Applied'
+        )
+      ] }
+
+      it 'returns the correct subtotal with bulk discount' do
+        expect(calculator.calculate[:subtotal]).to eq(25)
+      end
+
+      it 'returns false for two_plus_one' do
+        expect(calculator.calculate[:two_plus_one]).to be_falsey
+      end
+
+      it 'returns true for discount_price' do
+        expect(calculator.calculate[:discount_price]).to be_truthy
+      end
+
+      it 'returns the promotion description' do
+        expect(calculator.calculate[:promotion]).to eq('Bulk Discount Applied')
+      end
+    end
+
+    context 'when there is a coffee discount rule and quantity is greater than or equal to rule minimum quantity' do
+      let(:product_rules) { [
+        double(
+          'Coffee Discount Rule', 
+          rule_type: 'coffee_discount', 
+          rule_minimum_quantity: 2, 
+          rule_parameter: 0.5, 
+          description: 'Coffee Discount Applied'
+        )
+      ] }
+
+      it 'returns the correct subtotal with coffee discount' do
+        expect(calculator.calculate[:subtotal]).to eq(25)
+      end
+
+      it 'returns false for two_plus_one' do
+        expect(calculator.calculate[:two_plus_one]).to be_falsey
+      end
+
+      it 'returns true for discount_price' do
+        expect(calculator.calculate[:discount_price]).to be_truthy
+      end
+
+      it 'returns the promotion description' do
+        expect(calculator.calculate[:promotion]).to eq('Coffee Discount Applied')
+      end
     end
   end
 
-  context "with price discount" do
-    let(:quantity) { 3 }
+  describe '#is_discount_price?' do
+    let(:bulk_discount_rule) { instance_double('ProductRule', rule_type: 'bulk_discount', rule_minimum_quantity: 3) }
+    let(:coffee_discount_rule) { instance_double('ProductRule', rule_type: 'coffee_discount', rule_minimum_quantity: 2) }
 
-    before do
-      allow(product).to receive(:discount_quantity).and_return(quantity)
-      allow(product).to receive(:discount_price).and_return(5)
+    context 'when there is a bulk discount rule and quantity is greater than or equal to rule minimum quantity' do
+      it 'returns true' do
+        expect(calculator.send(:is_discount_price?, bulk_discount_rule, 3)).to be_truthy
+      end
     end
 
-    it "calculates subtotal with price discount" do
-      expect(subject.calculate).to eq(15)
-    end
-  end
-
-  context "with buy one get one free promotion" do
-    let(:quantity) { 4 }
-
-    before do
-      allow(product).to receive(:discount_quantity).and_return(2)
+    context 'when there is a coffee discount rule and quantity is greater than or equal to rule minimum quantity' do
+      it 'returns true' do
+        expect(calculator.send(:is_discount_price?, coffee_discount_rule, 2)).to be_truthy
+      end
     end
 
-    it "calculates subtotal with buy one get one free promotion" do
-      expect(subject.calculate).to eq(20)
-    end
-  end
+    context 'when rule type is neither bulk discount nor coffee discount' do
+      let(:rule) { instance_double('ProductRule', rule_type: 'some_other_rule', rule_minimum_quantity: 3) }
 
-  context "with no discounts" do
-    let(:quantity) { 1 }
-
-    it "calculates subtotal without discounts" do
-      expect(subject.calculate).to eq(product.price)
-    end
-  end
-
-  context "with product not found" do
-    let(:product_id) { 0 }
-    let(:quantity) { 1 }
-
-    before do
-      allow(boundary).to receive(:find_by_id).with(id: product_id).and_return(nil)
-    end
-
-    it "returns 0 as subtotal" do
-      expect(subject.calculate).to eq(0)
-    end
-  end
-
-  context "with invalid product data" do
-    let(:quantity) { 1 }
-
-    before do
-      allow(product).to receive(:discount_quantity).and_return(0)
-      allow(product).to receive(:discount_price).and_return(nil)
-    end
-
-    it "calculates subtotal without discounts" do
-      expect(subject.calculate).to eq(product.price)
+      it 'returns false' do
+        expect(calculator.send(:is_discount_price?, rule, 3)).to be_falsey
+      end
     end
   end
 end

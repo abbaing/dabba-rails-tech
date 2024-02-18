@@ -9,8 +9,12 @@ module Cart
     def calculate
       product = find_product
 
-      return 0 unless product.company_id == company_id
-      return 0 unless product
+      return { 
+        subtotal: 0,
+        two_plus_one: false,
+        discount_price: false,
+        promotion: ""
+      } unless product && product.company_id == company_id
       
       base_price = product.price
       discount = calculate_discount(base_price, product, quantity)
@@ -28,15 +32,13 @@ module Cart
         promotion: rule&.description || ""
       }
     end
-  
-    private
 
+    private
+  
     attr_reader :company_id
     attr_reader :product_id
     attr_reader :quantity
   
-    private
-
     def find_product
       products_boundary.find_by_id(id: @product_id)
     end
@@ -76,12 +78,15 @@ module Cart
     end
   
     def find_applicable_rule(product, quantity)
-      ProductRule
-        .where(product_id: @product_id)
-        .find { |rule| rule_applies?(rule, quantity) }
+      rule = ProductRule.where(product_id: @product_id)
+      return unless rule
+
+      rule.find { |rule| rule_applies?(rule, quantity) }
     end
   
     def rule_applies?(rule, quantity)
+      return if quantity == 0
+
       case rule.rule_type
       when "buy_one_get_one_free"
         quantity >= rule.rule_minimum_quantity
