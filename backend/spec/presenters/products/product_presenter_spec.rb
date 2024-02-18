@@ -8,6 +8,7 @@ RSpec.describe Products::ProductPresenter do
       code: "P001",
       name: "My product",
       price: 20.0,
+      rule_descriptions: 'Buy one get one free'
     )
   end
 
@@ -20,6 +21,7 @@ RSpec.describe Products::ProductPresenter do
         code: "P001",
         name: "My product",
         price: 20.0,
+        promotionMessage: 'Buy one get one free'
       }
 
       expect(product_presenter.as_json).to eq(expected_json)
