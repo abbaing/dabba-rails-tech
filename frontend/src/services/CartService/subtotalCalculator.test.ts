@@ -33,7 +33,7 @@ describe('SubtotalCalculator', () => {
         quantity
       )
 
-      expect(result).toEqual(expectedSubtotal)
+      expect(result).toEqual({ "subtotal": expectedSubtotal })
     })
 
     it('should throw an error if API call fails', async () => {
