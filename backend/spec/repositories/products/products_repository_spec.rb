@@ -4,6 +4,14 @@ RSpec.describe Products::ProductsRepository, type: :repository do
   let(:product_data) { double('ProductData') }
   let(:products_repository) { described_class.new(product_data) }
 
+  let(:product) { double('Product #1') }
+  let(:products) { double('Products') }
+
+  before do
+    allow(Product).to receive(:all).and_return(products)
+    allow(products).to receive(:includes).with(:product_rules).and_return(products)
+  end
+
   describe '#entity' do
     it 'returns the Product class' do
       expect(products_repository.entity).to eq(Product)
@@ -12,9 +20,6 @@ RSpec.describe Products::ProductsRepository, type: :repository do
 
   describe '#find_all' do
     it 'returns all products' do
-      products = [double('Product'), double('Product')]
-      allow(Product).to receive(:all).and_return(products)
-
       expect(products_repository.find_all).to eq(products)
     end
   end
@@ -22,8 +27,6 @@ RSpec.describe Products::ProductsRepository, type: :repository do
   describe '#find_by_id' do
     it 'returns the product with the specified id' do
       product = double('Product', id: 123)
-      products = [product]
-      allow(Product).to receive(:all).and_return(products)
       allow(products).to receive(:find).with(123).and_return(product)
 
       expect(products_repository.find_by_id(id: 123)).to eq(product)
