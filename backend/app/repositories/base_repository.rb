@@ -1,5 +1,4 @@
 class BaseRepository
-
   attr_reader :data
 
   def initialize(data)
@@ -21,7 +20,7 @@ class BaseRepository
   private
 
   def entity
-    raise NotImplementedError, "Subclasses must implement `entity` method"
+    raise NotImplementedError, 'Subclasses must implement `entity` method'
   end
 
   def entities

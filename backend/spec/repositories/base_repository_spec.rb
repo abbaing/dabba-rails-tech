@@ -11,8 +11,8 @@ RSpec.describe BaseRepository, type: :repository do
       end
     end
 
-    it "raises NotImplementedError when find_all is called" do
-      expect { BaseRepository.new(nil).find_all }.to raise_error(NotImplementedError)
+    it 'raises NotImplementedError when find_all is called' do
+      expect { described_class.new(nil).find_all }.to raise_error(NotImplementedError)
     end
   end
 end

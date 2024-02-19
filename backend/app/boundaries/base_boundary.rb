@@ -4,7 +4,7 @@ class BaseBoundary
   end
 
   def find_by_id(id:)
-    repository.find_by_id(id: id).tap do |found_entity|
+    repository.find_by_id(id:).tap do |found_entity|
       raise ActiveRecord::RecordNotFound unless apply_filters([found_entity]).include?(found_entity)
     end
   end
@@ -38,4 +38,3 @@ class BaseBoundary
     raise NotImplementedError
   end
 end
-  

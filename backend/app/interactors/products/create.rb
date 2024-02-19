@@ -1,7 +1,7 @@
 module Products
   class Create
     attr_reader :errors
-    
+
     def initialize(company_id, params)
       @company_id = company_id
       @params = params
@@ -22,8 +22,7 @@ module Products
 
     private
 
-    attr_reader :company_id
-    attr_reader :params
+    attr_reader :company_id, :params
 
     def serialize(product)
       Products::ProductPresenter.new(product).as_json

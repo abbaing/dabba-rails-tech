@@ -1,7 +1,6 @@
 module Api
   module V1
     class CartController < ApplicationController
-
       def subtotal
         result = interactor.calculate
 
@@ -30,5 +29,5 @@ module Api
         @company_id || 1
       end
     end
-  end      
+  end
 end

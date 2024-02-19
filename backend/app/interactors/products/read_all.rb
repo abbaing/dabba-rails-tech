@@ -7,11 +7,9 @@ module Products
     def call
       entities = boundary.find_all
 
-      result = entities.map do |entity|
+      entities.map do |entity|
         serialize(entity)
       end
-
-      result
     end
 
     private
@@ -21,7 +19,7 @@ module Products
     def serialize(product)
       Products::ProductPresenter.new(product).as_json
     end
-    
+
     def boundary
       Products::ProductsBoundary.new(company_id)
     end

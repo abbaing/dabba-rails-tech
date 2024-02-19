@@ -24,8 +24,8 @@ RSpec.describe Products::Create do
 
     context 'when entity fails to save' do
       let(:repository_double) { instance_double('Products::ProductsRepository') }
-      let(:errors) { double(details: { message: "Error saving product" }) }
-      let(:product_double) { instance_double('Product', save: false, errors: errors) }
+      let(:errors) { double(details: { message: 'Error saving product' }) }
+      let(:product_double) { instance_double('Product', save: false, errors:) }
 
       before do
         allow(Products::ProductsRepository).to receive(:new).and_return(repository_double)
@@ -38,7 +38,7 @@ RSpec.describe Products::Create do
 
       it 'assigns errors' do
         subject.call
-        expect(subject.errors).to_not be_empty
+        expect(subject.errors).not_to be_empty
       end
     end
   end

@@ -1,13 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe Products::Update do
+  subject { described_class.new(company_id, product_id, params) }
+
   let(:company_id) { 1 }
   let(:product_id) { 1 }
-  let(:product) { instance_double('Product', id: product_id, errors: errors) }
+  let(:product) { instance_double('Product', id: product_id, errors:) }
   let(:params) { { name: 'Updated Product' } }
   let(:boundary) { instance_double('Products::ProductsBoundary') }
 
-  subject { described_class.new(company_id, product_id, params) }
 
   before do
     allow(boundary).to receive(:find_by_id).with(id: product_id).and_return(product)
@@ -26,8 +27,8 @@ RSpec.describe Products::Update do
     end
 
     context 'and the update fails' do
-      let(:errors) { [{:error=>"Update failed"}] }
-    
+      let(:errors) { [{ error: 'Update failed' }] }
+
       it 'sets the errors and returns nil' do
         expect(product).to receive(:update).with(params).and_return(false)
         expect(subject.call).to be_nil

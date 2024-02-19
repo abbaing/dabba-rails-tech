@@ -10,41 +10,40 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_16_114718) do
-  create_table "product_rules", force: :cascade do |t|
-    t.integer "product_id"
-    t.string "rule_type"
-    t.decimal "rule_parameter"
-    t.integer "rule_minimum_quantity"
-    t.string "description"
-    t.boolean "active", default: true
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+ActiveRecord::Schema[7.1].define(version: 20_231_116_114_718) do
+  create_table 'product_rules', force: :cascade do |t|
+    t.integer 'product_id'
+    t.string 'rule_type'
+    t.decimal 'rule_parameter'
+    t.integer 'rule_minimum_quantity'
+    t.string 'description'
+    t.boolean 'active', default: true
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "products", force: :cascade do |t|
-    t.string "code"
-    t.string "name"
-    t.decimal "price"
-    t.boolean "active"
-    t.integer "company_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'products', force: :cascade do |t|
+    t.string 'code'
+    t.string 'name'
+    t.decimal 'price'
+    t.boolean 'active'
+    t.integer 'company_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "purchase_details", force: :cascade do |t|
-    t.integer "purchase_id"
-    t.integer "product_id"
-    t.integer "quantity"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'purchase_details', force: :cascade do |t|
+    t.integer 'purchase_id'
+    t.integer 'product_id'
+    t.integer 'quantity'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "purchases", force: :cascade do |t|
-    t.date "purchase_date"
-    t.decimal "total_price"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'purchases', force: :cascade do |t|
+    t.date 'purchase_date'
+    t.decimal 'total_price'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
-
 end

@@ -1,7 +1,6 @@
 module Api
   module V1
     class ProductsController < ApplicationController
-
       def index
         result = ::Products::ReadAll.new(company_id).call
 
@@ -11,7 +10,7 @@ module Api
           render json: {}, status: 200
         end
       end
-    
+
       def show
         result = ::Products::ReadOne.new(company_id, id).call
 
@@ -21,7 +20,7 @@ module Api
           render json: {}, status: 200
         end
       end
-    
+
       def create
         result = create_interactor.call
 
@@ -31,7 +30,7 @@ module Api
           render json: { errors: create_interactor.errors.details }, status: 422
         end
       end
-    
+
       def update
         result = update_interactor.call
 
@@ -41,7 +40,7 @@ module Api
           render json: { errors: update_interactor.errors.details }, status: 422
         end
       end
-    
+
       def destroy
         result = delete_interactor.call
 
@@ -51,7 +50,7 @@ module Api
           render json: { errors: delete_interactor.errors.details }, status: 422
         end
       end
-    
+
       private
 
       def product_params
@@ -78,5 +77,5 @@ module Api
         ::Products::Delete.new(company_id, id)
       end
     end
-  end      
+  end
 end
