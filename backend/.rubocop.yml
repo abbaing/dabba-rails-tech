@@ -2,8 +2,10 @@ require:
   - rubocop-rspec
 
 AllCops:
-  Exclude:
+  Excludes:
     - "bin/bundle"
+    - "config/**/*"
+    - "db/**/*"
 
 Layout/LineLength:
   Max: 100
@@ -18,6 +20,9 @@ RSpec/AnyInstance:
   Enabled: false
 
 RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
   Enabled: false
 
 RSpec/MessageSpies:

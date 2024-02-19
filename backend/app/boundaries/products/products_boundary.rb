@@ -3,6 +3,7 @@ module Products
     attr_reader :company_id
 
     def initialize(company_id)
+      super()
       @company_id = company_id
     end
 

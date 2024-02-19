@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Products::ReadOne do
-  subject { described_class.new(company_id, product_id) }
+  subject(:read_one_product) { described_class.new(company_id, product_id) }
 
   let(:company_id) { 1 }
   let(:product_id) { 1 }
@@ -12,7 +12,6 @@ RSpec.describe Products::ReadOne do
   end
   let(:serialized_product) { { id: product_id, name: 'Example Product' } }
 
-
   before do
     allow(Products::ProductsBoundary).to receive(:new).with(company_id).and_return(boundary)
     allow(boundary).to receive(:find_by_id).with(id: product_id).and_return(product)
@@ -22,7 +21,7 @@ RSpec.describe Products::ReadOne do
   describe '#call' do
     context 'when the product exists' do
       it 'returns the serialized product' do
-        expect(subject.call).to eq(serialized_product)
+        expect(read_one_product.call).to eq(serialized_product)
       end
     end
 
@@ -30,7 +29,7 @@ RSpec.describe Products::ReadOne do
       let(:product) { nil }
 
       it 'returns nil' do
-        expect(subject.call).to be_nil
+        expect(read_one_product.call).to be_nil
       end
     end
   end

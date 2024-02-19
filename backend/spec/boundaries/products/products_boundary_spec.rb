@@ -4,8 +4,8 @@ RSpec.describe Products::ProductsBoundary, type: :boundary do
   let(:company_id) { 1 }
   let(:products_boundary) { described_class.new(company_id) }
 
-  let(:product) { double('Product #1') }
-  let(:products) { double('Products') }
+  let(:product) { instance_double('Product', id: 123) }
+  let(:products) { instance_double('ActiveRecord::Relation') }
 
   before do
     allow(Product).to receive(:all).and_return(products)

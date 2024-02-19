@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Products::ProductPresenter do
   let(:product) do
-    double(
+    instance_double(
       'Product',
       id: 1,
       code: 'P001',

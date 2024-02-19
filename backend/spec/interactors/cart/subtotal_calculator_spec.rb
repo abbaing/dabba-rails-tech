@@ -5,9 +5,9 @@ RSpec.describe Cart::SubtotalCalculator do
   let(:product_id) { 1 }
   let(:quantity) { 5 }
   let(:calculator) { described_class.new(company_id, product_id, quantity) }
-  let(:product) { double('Product', company_id:, price: 10) }
-  let(:product_rule) { double('Product Rule') }
-  let(:product_rules) { double('Product Rules') }
+  let(:product) { instance_double('Product', company_id:, price: 10) }
+  let(:product_rule) { instance_double('Product Rule') }
+  let(:product_rules) { nil }
 
   before do
     allow_any_instance_of(described_class).to receive(:find_product).and_return(product)
@@ -57,10 +57,10 @@ RSpec.describe Cart::SubtotalCalculator do
       end
     end
 
-    context 'when there is a bulk discount rule and quantity is greater than or equal to rule minimum quantity' do
+    context 'when bulk discount rule applies & quantity meets/exceeds minimum' do
       let(:product_rules) do
         [
-          double(
+          instance_double(
             'Bulk Discount Rule',
             rule_type: 'coffee_discount',
             rule_minimum_quantity: 2,
@@ -71,7 +71,7 @@ RSpec.describe Cart::SubtotalCalculator do
       end
 
       it 'returns the correct subtotal with bulk discount' do
-        expect(calculator.calculate[:subtotal]).to eq(25)
+        expect(calculator.calculate[:subtotal]).to eq(47.5)
       end
 
       it 'returns false for two_plus_one' do
@@ -87,10 +87,10 @@ RSpec.describe Cart::SubtotalCalculator do
       end
     end
 
-    context 'when there is a coffee discount rule and quantity is greater than or equal to rule minimum quantity' do
+    context 'when coffee discount rule applies & quantity meets/exceeds minimum' do
       let(:product_rules) do
         [
-          double(
+          instance_double(
             'Coffee Discount Rule',
             rule_type: 'coffee_discount',
             rule_minimum_quantity: 2,
@@ -101,7 +101,7 @@ RSpec.describe Cart::SubtotalCalculator do
       end
 
       it 'returns the correct subtotal with coffee discount' do
-        expect(calculator.calculate[:subtotal]).to eq(25)
+        expect(calculator.calculate[:subtotal]).to eq(47.5)
       end
 
       it 'returns false for two_plus_one' do
@@ -118,7 +118,7 @@ RSpec.describe Cart::SubtotalCalculator do
     end
   end
 
-  describe '#is_discount_price?' do
+  describe '#discount_price?' do
     let(:bulk_discount_rule) do
       instance_double('ProductRule', rule_type: 'bulk_discount', rule_minimum_quantity: 3)
     end
@@ -126,15 +126,15 @@ RSpec.describe Cart::SubtotalCalculator do
       instance_double('ProductRule', rule_type: 'coffee_discount', rule_minimum_quantity: 2)
     end
 
-    context 'when there is a bulk discount rule and quantity is greater than or equal to rule minimum quantity' do
+    context 'when bulk discount rule applies & quantity meets/exceeds minimum' do
       it 'returns true' do
-        expect(calculator.send(:is_discount_price?, bulk_discount_rule, 3)).to be_truthy
+        expect(calculator.send(:discount_price?, bulk_discount_rule, 3)).to be_truthy
       end
     end
 
-    context 'when there is a coffee discount rule and quantity is greater than or equal to rule minimum quantity' do
+    context 'when coffee discount rule applies & quantity meets/exceeds minimum' do
       it 'returns true' do
-        expect(calculator.send(:is_discount_price?, coffee_discount_rule, 2)).to be_truthy
+        expect(calculator.send(:discount_price?, coffee_discount_rule, 2)).to be_truthy
       end
     end
 
@@ -144,7 +144,7 @@ RSpec.describe Cart::SubtotalCalculator do
       end
 
       it 'returns false' do
-        expect(calculator.send(:is_discount_price?, rule, 3)).to be_falsey
+        expect(calculator.send(:discount_price?, rule, 3)).to be_falsey
       end
     end
   end

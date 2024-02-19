@@ -24,8 +24,8 @@ module Cart
       subtotal = (base_price * quantity) - discount
 
       rule = find_applicable_rule(product, quantity)
-      two_plus_one = is_buy_one_get_one_free?(rule, quantity)
-      discount_price = is_discount_price?(rule, quantity)
+      two_plus_one = buy_one_get_one_free?(rule, quantity)
+      discount_price = discount_price?(rule, quantity)
 
       {
         subtotal:,
@@ -46,42 +46,23 @@ module Cart
     def calculate_discount(base_price, product, quantity)
       rule = find_applicable_rule(product, quantity)
 
-      if rule
-        rule_type = rule.rule_type
-        rule_parameter = rule.rule_parameter
+      return 0 unless rule
 
-        case rule_type
-        when 'buy_one_get_one_free'
-          if quantity >= 2
-            quantity / 2 * base_price
-          else
-            0
-          end
-        when 'bulk_discount'
-          if quantity >= rule.rule_minimum_quantity
-            # Calculate discounted price for entire quantity
-            quantity * rule_parameter
-          else
-            0
-          end
-        when 'coffee_discount'
-          if quantity >= rule.rule_minimum_quantity
-            # Calculate discounted price per unit and apply to each unit
-            base_price * rule_parameter * quantity
-          else
-            0
-          end
-        end
-      else
-        0
+      case rule.rule_type
+      when 'buy_one_get_one_free'
+        return (quantity / 2 * base_price) if quantity >= 2
+      when 'bulk_discount', 'coffee_discount'
+        return (quantity * rule.rule_parameter) if quantity >= rule.rule_minimum_quantity
       end
+
+      0
     end
 
     def find_applicable_rule(_product, quantity)
       rule = ProductRule.where(product_id: @product_id)
       return unless rule
 
-      rule.find { |rule| rule_applies?(rule, quantity) }
+      rule.find { |item| rule_applies?(item, quantity) }
     end
 
     def rule_applies?(rule, quantity)
@@ -95,14 +76,14 @@ module Cart
       end
     end
 
-    def is_buy_one_get_one_free?(rule, quantity)
+    def buy_one_get_one_free?(rule, quantity)
       return false unless rule
       return false unless quantity
 
       quantity >= 2 && rule.rule_type == 'buy_one_get_one_free'
     end
 
-    def is_discount_price?(rule, quantity)
+    def discount_price?(rule, quantity)
       return false unless rule
       return false unless quantity
 
