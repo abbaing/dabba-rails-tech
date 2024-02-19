@@ -11,7 +11,7 @@ describe('SubtotalCalculator', () => {
     id: 1,
     name: 'Product 1',
     price: 10,
-    code: 'P01',
+    code: 'P01'
   }
 
   afterEach(() => {
@@ -24,16 +24,13 @@ describe('SubtotalCalculator', () => {
       const expectedSubtotal = 20
 
       mockedAxios.post.mockResolvedValueOnce({
-        data: { subtotal: expectedSubtotal },
+        data: { subtotal: expectedSubtotal }
       })
 
       const subtotalCalculator = new SubtotalCalculator()
-      const result = await subtotalCalculator.calculateSubtotal(
-        product,
-        quantity
-      )
+      const result = await subtotalCalculator.calculateSubtotal(product, quantity)
 
-      expect(result).toEqual({ "subtotal": expectedSubtotal })
+      expect(result).toEqual({ subtotal: expectedSubtotal })
     })
 
     it('should throw an error if API call fails', async () => {
@@ -43,9 +40,9 @@ describe('SubtotalCalculator', () => {
 
       const subtotalCalculator = new SubtotalCalculator()
 
-      await expect(
-        subtotalCalculator.calculateSubtotal(product, quantity)
-      ).rejects.toThrow(`Error fetching subtotal`)
+      await expect(subtotalCalculator.calculateSubtotal(product, quantity)).rejects.toThrow(
+        `Error fetching subtotal`
+      )
     })
   })
 })

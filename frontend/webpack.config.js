@@ -6,7 +6,7 @@ module.exports = {
   entry: './src/index.tsx',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dist')
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
@@ -17,39 +17,39 @@ module.exports = {
       utils: path.join(__dirname, 'src/utils'),
       stores: path.join(__dirname, 'src/stores'),
       services: path.join(__dirname, 'src/services'),
-      models: path.join(__dirname, 'src/models'),
-    },
+      models: path.join(__dirname, 'src/models')
+    }
   },
   module: {
     rules: [
       {
         test: /\.(ts|tsx)$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
+        exclude: /node_modules/
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-    ],
+        use: ['style-loader', 'css-loader']
+      }
+    ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: './public/index.html'
     }),
     new Dotenv({
       path: path.resolve(
         __dirname,
         'config',
         process.env.NODE_ENV === 'production' ? 'prod.env' : 'dev.env'
-      ),
-    }),
+      )
+    })
   ],
   devServer: {
     static: {
-      directory: path.join(__dirname, 'dist'),
+      directory: path.join(__dirname, 'dist')
     },
     historyApiFallback: true,
-    port: 8080,
-  },
+    port: 8080
+  }
 }

@@ -13,7 +13,7 @@ describe('CartUpdater', () => {
     id: 1,
     name: 'Product 1',
     price: 10,
-    code: 'P01',
+    code: 'P01'
   }
 
   beforeEach(() => {
@@ -31,9 +31,7 @@ describe('CartUpdater', () => {
 
     cartUpdater.updateCart(product, quantity)
 
-    expect(cartStore.addItem).toHaveBeenCalledWith(
-      new CartModel(product, quantity)
-    )
+    expect(cartStore.addItem).toHaveBeenCalledWith(new CartModel(product, quantity))
   })
 
   it('should update the quantity of an existing item in the cart', () => {
@@ -44,9 +42,6 @@ describe('CartUpdater', () => {
 
     cartUpdater.updateCart(product, quantity)
 
-    expect(cartStore.updateItemQuantity).toHaveBeenCalledWith(
-      product.id,
-      quantity
-    )
+    expect(cartStore.updateItemQuantity).toHaveBeenCalledWith(product.id, quantity)
   })
 })

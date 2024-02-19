@@ -24,18 +24,18 @@ describe('CartStore tests', () => {
     id: 1,
     name: 'Product 1',
     price: 10,
-    code: 'P01',
+    code: 'P01'
   }
   const product_2: ProductModel = {
     id: 2,
     name: 'Product 2',
     price: 20,
-    code: 'P02',
+    code: 'P02'
   }
 
   const item: CartModel = {
     product: product_1,
-    quantity: 1,
+    quantity: 1
   }
 
   beforeEach(() => {
@@ -80,7 +80,7 @@ describe('CartStore tests', () => {
   it('should calculate the total number of items in the cart', () => {
     const item2: CartModel = {
       product: product_2,
-      quantity: 2,
+      quantity: 2
     }
     cartStore.addItem(item)
     cartStore.addItem(item2)

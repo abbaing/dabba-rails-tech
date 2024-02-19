@@ -14,7 +14,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div>
       <Navbar />
       <ToastContainer
-        position='top-right'
+        position="top-right"
         autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
@@ -23,9 +23,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme='light'
+        theme="light"
       />
-      <div className='container mt-5'>
+      <div className="container mt-5">
         <div>{children}</div>
       </div>
     </div>

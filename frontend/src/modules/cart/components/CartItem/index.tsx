@@ -20,10 +20,7 @@ const CartItem = ({ item }: Props) => {
   useEffect(() => {
     const fetchOptions = async (): Promise<void> => {
       try {
-        const subtotalResponse = await cartService.calculateSubtotal(
-          item.product,
-          count
-        )
+        const subtotalResponse = await cartService.calculateSubtotal(item.product, count)
         setSubtotal(subtotalResponse.subtotal as number)
         setTwoPlusOne(subtotalResponse.two_plus_one as boolean)
         setDiscountPrice(subtotalResponse.discount_price as boolean)
@@ -60,65 +57,61 @@ const CartItem = ({ item }: Props) => {
 
   const priceComponent = () => {
     return (
-      <small className='text-body-secondary'>
-        <span className='price'> {formatCurrency(product.price)}</span>
+      <small className="text-body-secondary">
+        <span className="price"> {formatCurrency(product.price)}</span>
       </small>
     )
   }
 
   const subtotalComponent = () => {
     return (
-      <small className='text-body-secondary'>
-        <span className='price'> {formatCurrency(subtotal)}</span>
+      <small className="text-body-secondary">
+        <span className="price"> {formatCurrency(subtotal)}</span>
       </small>
     )
   }
 
   return (
-    <div
-      className={`${styles.container} cart-item d-md-flex justify-content-between`}
-    >
-      <div className='col-md-auto px-3 my-3'>
-        <button className='btn btn-sm btn-outline-secondary' onClick={onRemove}>
+    <div className={`${styles.container} cart-item d-md-flex justify-content-between`}>
+      <div className="col-md-auto px-3 my-3">
+        <button className="btn btn-sm btn-outline-secondary" onClick={onRemove}>
           Remove
         </button>
       </div>
-      <div className='col-md-5 px-3 my-3'>
+      <div className="col-md-5 px-3 my-3">
         <h4>{product.name}</h4>
         <span className={`${styles['column-label']}`}>
           <strong>Code:</strong> {product.code}
         </span>
-        {discountPrice && <span className='price-badge badge text-bg-info'>Promo!</span>}
-        {twoPlusOne && <span className='price-badge badge text-bg-warning'>2X1</span>}
-        {promotion && <div><span className='fs-6 text-muted'>{promotion}</span></div>}
+        {discountPrice && <span className="price-badge badge text-bg-info">Promo!</span>}
+        {twoPlusOne && <span className="price-badge badge text-bg-warning">2X1</span>}
+        {promotion && (
+          <div>
+            <span className="fs-6 text-muted">{promotion}</span>
+          </div>
+        )}
       </div>
-      <div className='col-md-auto px-3 my-3 text-center'>
+      <div className="col-md-auto px-3 my-3 text-center">
         <div className={styles['column-label']}>Quantity</div>
         <div className={styles['count-input']}>
           <div>
-            <button
-              className='btn btn-outline-secondary'
-              onClick={handleDecrement}
-            >
+            <button className="btn btn-outline-secondary" onClick={handleDecrement}>
               -
             </button>
             <span className={styles['cart-counter']}>{count}</span>
-            <button
-              className='btn btn-outline-secondary'
-              onClick={handleIncrement}
-            >
+            <button className="btn btn-outline-secondary" onClick={handleIncrement}>
               +
             </button>
           </div>
         </div>
       </div>
-      <div className='col-md-2 px-3 my-3 text-center'>
+      <div className="col-md-2 px-3 my-3 text-center">
         <div className={styles['column-label']}>Price</div>
-        <span className='text-xl font-weight-medium'>{priceComponent()}</span>
+        <span className="text-xl font-weight-medium">{priceComponent()}</span>
       </div>
-      <div className='col-md-auto px-3 my-3 text-center'>
+      <div className="col-md-auto px-3 my-3 text-center">
         <div className={styles['column-label']}>Subtotal</div>
-        <span className='text-xl font-weight-medium'>{subtotalComponent()}</span>
+        <span className="text-xl font-weight-medium">{subtotalComponent()}</span>
       </div>
     </div>
   )

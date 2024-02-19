@@ -6,10 +6,7 @@ export class CartService {
   private cartUpdater: CartUpdater
   private subtotalCalculator: SubtotalCalculator
 
-  constructor(
-    cartUpdater: CartUpdater,
-    subtotalCalculator: SubtotalCalculator
-  ) {
+  constructor(cartUpdater: CartUpdater, subtotalCalculator: SubtotalCalculator) {
     this.cartUpdater = cartUpdater
     this.subtotalCalculator = subtotalCalculator
   }
@@ -18,19 +15,13 @@ export class CartService {
     this.cartUpdater.updateCart(item, quantity)
   }
 
-  async calculateSubtotal(
-    item: ProductModel,
-    quantity: number
-  ): Promise<any> {
+  async calculateSubtotal(item: ProductModel, quantity: number): Promise<any> {
     return this.subtotalCalculator.calculateSubtotal(item, quantity)
   }
 }
 
 const cartUpdaterInstance = new CartUpdater()
 const subtotalCalculatorInstance = new SubtotalCalculator()
-const cartServiceInstance = new CartService(
-  cartUpdaterInstance,
-  subtotalCalculatorInstance
-)
+const cartServiceInstance = new CartService(cartUpdaterInstance, subtotalCalculatorInstance)
 
 export default cartServiceInstance

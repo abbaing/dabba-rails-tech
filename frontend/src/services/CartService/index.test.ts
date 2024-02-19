@@ -14,7 +14,7 @@ describe('CartService', () => {
     id: 1,
     name: 'Product 1',
     price: 10,
-    code: 'P01',
+    code: 'P01'
   }
 
   it('debería llamar a updateCart en cartUpdater al llamar a updateCart', () => {
@@ -22,10 +22,7 @@ describe('CartService', () => {
 
     CartService.updateCart(product, quantity)
 
-    expect(CartService['cartUpdater'].updateCart).toHaveBeenCalledWith(
-      product,
-      quantity
-    )
+    expect(CartService['cartUpdater'].updateCart).toHaveBeenCalledWith(product, quantity)
   })
 
   it('debería llamar a calculateSubtotal en subtotalCalculator al llamar a calculateSubtotal', async () => {
@@ -33,8 +30,9 @@ describe('CartService', () => {
 
     await CartService.calculateSubtotal(product, quantity)
 
-    expect(
-      CartService['subtotalCalculator'].calculateSubtotal
-    ).toHaveBeenCalledWith(product, quantity)
+    expect(CartService['subtotalCalculator'].calculateSubtotal).toHaveBeenCalledWith(
+      product,
+      quantity
+    )
   })
 })

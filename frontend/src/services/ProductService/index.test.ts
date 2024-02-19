@@ -15,7 +15,7 @@ describe('ProductService', () => {
     id: 1,
     name: 'Product 1',
     price: 10,
-    code: 'P01',
+    code: 'P01'
   }
 
   it('should fetch products successfully', async () => {
@@ -30,8 +30,6 @@ describe('ProductService', () => {
   it('should throw an error when fetching products fails', async () => {
     mockedAxios.get.mockRejectedValue(new Error('Network Error'))
 
-    await expect(ProductService.getAll()).rejects.toThrow(
-      'Error fetching products'
-    )
+    await expect(ProductService.getAll()).rejects.toThrow('Error fetching products')
   })
 })

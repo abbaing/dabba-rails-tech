@@ -5,8 +5,8 @@ import MyCartPage from 'modules/cart/pages/MyCartPage'
 const CartRoutes = [
   {
     path: '/my-cart',
-    element: <MyCartPage />,
-  },
+    element: <MyCartPage />
+  }
 ]
 
 export default CartRoutes

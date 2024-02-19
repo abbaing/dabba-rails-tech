@@ -1,9 +1,6 @@
 import { action, computed, observable } from 'mobx'
 import CartModel from 'models/cartModel'
-import {
-  CartStorage,
-  LocalStorageCartStorage,
-} from 'stores/localStorageCartStorage'
+import { CartStorage, LocalStorageCartStorage } from 'stores/localStorageCartStorage'
 
 export class CartStore {
   @observable accessor items: CartModel[] = []

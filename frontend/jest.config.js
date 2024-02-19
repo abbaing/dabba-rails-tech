@@ -4,6 +4,6 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleDirectories: ['node_modules', 'src'],
   transform: {
-    '^.+\\.tsx?$': 'ts-jest',
-  },
+    '^.+\\.tsx?$': 'ts-jest'
+  }
 }

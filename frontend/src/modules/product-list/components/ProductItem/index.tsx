@@ -36,47 +36,48 @@ const ProductItem = ({ item }: Props) => {
 
     if (hasPromotionQuantity && applyPromotion && hasPromotionPrice) {
       return (
-        <small className='text-body-secondary'>
-          <span className='old-price'>{formatCurrency(item.price)}</span>
-          <span className='price'> {formatCurrency(item.promotionPrice)}</span>
+        <small className="text-body-secondary">
+          <span className="old-price">{formatCurrency(item.price)}</span>
+          <span className="price"> {formatCurrency(item.promotionPrice)}</span>
         </small>
       )
     }
     if (hasPromotionQuantity && applyPromotion) {
       return (
-        <small className='text-body-secondary'>
-          <span className='price'> {formatCurrency(item.price)}</span>
-          <span className='price-badge badge text-bg-warning'>2X1</span>
+        <small className="text-body-secondary">
+          <span className="price"> {formatCurrency(item.price)}</span>
+          <span className="price-badge badge text-bg-warning">2X1</span>
         </small>
       )
     } else {
       return (
-        <small className='text-body-secondary'>
-          <span className='price'> {formatCurrency(item.price)}</span>
+        <small className="text-body-secondary">
+          <span className="price"> {formatCurrency(item.price)}</span>
         </small>
       )
     }
   }
 
   return (
-    <div className='col'>
-      <div className='card h-100'>
-        <div className='card-body'>
-          <h5 className='card-title'>{item.name}</h5>
-          <p className='card-text'>Code {item.code}</p>
-          <p className='card-text'>{priceComponent()}</p>
-          {item.promotionMessage &&
-            <div className='alert alert-primary' role='alert'>
+    <div className="col">
+      <div className="card h-100">
+        <div className="card-body">
+          <h5 className="card-title">{item.name}</h5>
+          <p className="card-text">Code {item.code}</p>
+          <p className="card-text">{priceComponent()}</p>
+          {item.promotionMessage && (
+            <div className="alert alert-primary" role="alert">
               <h5 className="alert-heading">Hey! Promos here:</h5>
               <hr />
               <p>{item.promotionMessage}</p>
-            </div>}
+            </div>
+          )}
         </div>
-        <div className='card-footer'>
+        <div className="card-footer">
           {!showSelector && (
             <a
-              href='#'
-              className='btn btn-primary'
+              href="#"
+              className="btn btn-primary"
               onClick={() => {
                 handleIncrement()
                 setShowSelector(true)
@@ -87,17 +88,11 @@ const ProductItem = ({ item }: Props) => {
           )}
           {showSelector && (
             <div>
-              <button
-                className='btn btn-outline-secondary'
-                onClick={handleDecrement}
-              >
+              <button className="btn btn-outline-secondary" onClick={handleDecrement}>
                 -
               </button>
-              <span className='cart-counter'>{count}</span>
-              <button
-                className='btn btn-outline-secondary'
-                onClick={handleIncrement}
-              >
+              <span className="cart-counter">{count}</span>
+              <button className="btn btn-outline-secondary" onClick={handleIncrement}>
                 +
               </button>
             </div>

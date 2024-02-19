@@ -12,12 +12,12 @@ describe('LocalStorageCartStorage', () => {
     id: 1,
     name: 'Product 1',
     price: 10,
-    code: 'P01',
+    code: 'P01'
   }
 
   const item: CartModel = {
     product: product,
-    quantity: 1,
+    quantity: 1
   }
 
   describe('save method', () => {

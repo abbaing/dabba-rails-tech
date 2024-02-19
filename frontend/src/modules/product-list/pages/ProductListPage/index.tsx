@@ -24,9 +24,9 @@ const ProductListPage = (): JSX.Element => {
 
   return (
     <Layout>
-      <h1 className='display-5 pb-3 mb-3 border-bottom'>Product Catalog</h1>
-      <div className='container product-catalog-container'>
-        <div className='row row-cols-md-3 g-4'>
+      <h1 className="display-5 pb-3 mb-3 border-bottom">Product Catalog</h1>
+      <div className="container product-catalog-container">
+        <div className="row row-cols-md-3 g-4">
           {products.map((item) => (
             <ProductItem key={item.id} item={item} />
           ))}

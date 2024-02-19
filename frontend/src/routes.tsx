@@ -10,8 +10,8 @@ const Routes = (): JSX.Element => {
     {
       path: '/',
       element: <RootPage />,
-      errorElement: <NotFoundPage />,
-    },
+      errorElement: <NotFoundPage />
+    }
   ]
   const paths = [...rootPath, ...ProductListRoutes, ...CartRoutes]
   return (
