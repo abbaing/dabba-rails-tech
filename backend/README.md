@@ -10,8 +10,10 @@ cd backend
 bundle install
 
 rails db:create
-rails db:migrate
-rails db:seed
+rails db:migrate RAILS_ENV=development
+rails db:migrate RAILS_ENV=test
+rails db:seed RAILS_ENV=development
+rails db:seed RAILS_ENV=test
 ```
 
 ### Launching the API
