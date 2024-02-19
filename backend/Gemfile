@@ -52,7 +52,13 @@ group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
 
-  gem "rspec-rails"
+  gem 'pry-byebug', '~> 3.10', '>= 3.10.1'
+
+  gem 'faker', '~> 3.2', '>= 3.2.3'
+
+  gem 'rubocop', require: false
+
+  gem 'rubocop-rspec', require: false
 end
 
 group :development do
@@ -70,4 +76,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  
+  # RSpec for Rails (https://github.com/rspec/rspec-rails)
+  gem "rspec-rails"
 end
