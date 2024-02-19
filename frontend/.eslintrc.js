@@ -4,9 +4,10 @@ module.exports = {
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:react/recommended',
-        'prettier',
+        'plugin:prettier/recommended',
     ],
     rules: {
+        'react/react-in-jsx-scope': 'off',
         'prettier/prettier': 'error',
         'react/prop-types': 0,
     },
@@ -15,4 +16,9 @@ module.exports = {
             version: 'detect',
         },
     },
+    env: {
+        "browser": true,
+        "es2021": true,
+        "jest": true
+    }
 };
