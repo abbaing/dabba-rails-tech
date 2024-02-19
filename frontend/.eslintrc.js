@@ -8,5 +8,11 @@ module.exports = {
     ],
     rules: {
         'prettier/prettier': 'error',
+        'react/prop-types': 0,
+    },
+    settings: {
+        react: {
+            version: 'detect',
+        },
     },
 };

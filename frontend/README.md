@@ -41,6 +41,6 @@ In React, the app is structured into modules, with each module containing three 
 
 To ensure the quality of the code, this project utilizes the following commands:
 ```
-npm lint
-npm format
+npm run lint
+npm run format
 ```
