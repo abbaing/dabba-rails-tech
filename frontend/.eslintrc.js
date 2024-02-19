@@ -20,5 +20,11 @@ module.exports = {
     browser: true,
     es2021: true,
     jest: true
-  }
+  },
+  ignorePatterns: [
+    'jest.config.js',
+    'webpack.config.js',
+    '**/*.config.js',
+    '.eslintrc.js'
+  ],
 }

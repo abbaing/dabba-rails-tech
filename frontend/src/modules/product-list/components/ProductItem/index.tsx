@@ -14,7 +14,7 @@ const ProductItem = ({ item }: Props) => {
   const [count, setCount] = useState(0)
 
   const handleIncrement = () => {
-    let newCount = count + 1
+    const newCount = count + 1
     setCount(newCount)
     cartService.updateCart(item, newCount)
 
@@ -22,7 +22,7 @@ const ProductItem = ({ item }: Props) => {
   }
 
   const handleDecrement = () => {
-    let newCount = count - 1
+    const newCount = count - 1
     if (newCount > 0) {
       setCount(newCount)
       cartService.updateCart(item, newCount)
@@ -81,8 +81,7 @@ const ProductItem = ({ item }: Props) => {
               onClick={() => {
                 handleIncrement()
                 setShowSelector(true)
-              }}
-            >
+              }}>
               Add To Cart
             </a>
           )}

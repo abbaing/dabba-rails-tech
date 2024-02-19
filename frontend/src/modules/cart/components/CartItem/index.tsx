@@ -21,10 +21,10 @@ const CartItem = ({ item }: Props) => {
     const fetchOptions = async (): Promise<void> => {
       try {
         const subtotalResponse = await cartService.calculateSubtotal(item.product, count)
-        setSubtotal(subtotalResponse.subtotal as number)
-        setTwoPlusOne(subtotalResponse.two_plus_one as boolean)
-        setDiscountPrice(subtotalResponse.discount_price as boolean)
-        setPromotion(subtotalResponse.promotion as string)
+        setSubtotal(subtotalResponse.subtotal)
+        setTwoPlusOne(subtotalResponse.two_plus_one)
+        setDiscountPrice(subtotalResponse.discount_price)
+        setPromotion(subtotalResponse.promotion)
       } catch (error) {
         toast.error('There was a problem retrieving the data.')
       }
@@ -34,13 +34,13 @@ const CartItem = ({ item }: Props) => {
   }, [count])
 
   const handleIncrement = () => {
-    let newCount = count + 1
+    const newCount = count + 1
     setCount(newCount)
     cartService.updateCart(product, newCount)
   }
 
   const handleDecrement = () => {
-    let newCount = count - 1
+    const newCount = count - 1
     if (newCount > 0) {
       setCount(newCount)
       cartService.updateCart(product, newCount)

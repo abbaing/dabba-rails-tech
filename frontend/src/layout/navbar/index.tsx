@@ -18,8 +18,7 @@ const Navbar = () => {
           data-bs-target="#navbarsExample04"
           aria-controls="navbarsExample04"
           aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+          aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
 

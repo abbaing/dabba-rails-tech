@@ -1,6 +1,6 @@
 import ProductModel from 'models/productModel'
 import CartUpdater from 'services/CartService/cartUpdater'
-import SubtotalCalculator from 'services/CartService/subtotalCalculator'
+import SubtotalCalculator, { SubtotalResponse } from 'services/CartService/subtotalCalculator'
 
 export class CartService {
   private cartUpdater: CartUpdater
@@ -15,7 +15,7 @@ export class CartService {
     this.cartUpdater.updateCart(item, quantity)
   }
 
-  async calculateSubtotal(item: ProductModel, quantity: number): Promise<any> {
+  async calculateSubtotal(item: ProductModel, quantity: number): Promise<SubtotalResponse> {
     return this.subtotalCalculator.calculateSubtotal(item, quantity)
   }
 }
