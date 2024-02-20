@@ -68,11 +68,11 @@ The Marketplace project has been developed using the following technologies:
 
 4. **Without Docker? Manual execution is an option:**
 
-    For backend documentation, please refer to: [Read the backend documentation](backend/README.md)
+    For backend documentation, please refer to: [Read the backend documentation](./backend/README.md)
 
-    For frontend documentation, please refer to: [Read the frontend documentation](frontend/README.md)
+    For frontend documentation, please refer to: [Read the frontend documentation](./frontend/README.md)
 
-    Also end-to-end documentation, please refer to: [Read the E2E documentation](e2e/README.md)
+    Also end-to-end documentation, please refer to: [Read the E2E documentation](./e2e/README.md)
 
 ## Next Steps
 

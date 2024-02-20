@@ -51,7 +51,8 @@ Request:
 | id      | Product ID                                | integer | yes                 |
 | quantity| Number of products to multiply by price   | integer | yes                 |
 
-Response
+Response:
+
 | Param          | Description                         | Type              |
 | -------------- | ----------------------------------- | ----------------- |
 | subtotal       | Calculate the subtotal detail       | floating number   |
